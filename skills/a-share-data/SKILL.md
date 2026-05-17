@@ -1,5 +1,6 @@
 ---
 name: longchina-data
+version: 0.1.1
 description: Use when a user needs authoritative P0 A-share market, daily indicator, adjustment factor, stock master, or trading calendar data through the longchina CLI/API. The skill must fetch real data via `longchina` and must not invent investment data.
 ---
 
@@ -20,8 +21,10 @@ If the skills CLI is unavailable, use the manual skill install fallback in `/ins
 Before data work, verify the current runtime:
 
 ```bash
-longchina status --json
+longchina status --json --skill-version 0.1.1
 ```
+
+`status` performs the periodic CLI/skill version policy check. If the JSON response contains `version.cli.update_required: true` or `version.skill.update_required: true`, reinstall the CLI and this skill before continuing. Minor-version updates may be reported as available but are not blocking.
 
 The CLI defaults to `https://longchina.vercel.app/api`. For local development or preview deployments, pass `--api-url URL` on `status`, `datasets`, or `query`, or set `LONGCHINA_API_URL`.
 
@@ -30,19 +33,20 @@ If the environment provides an API key, token login is optional:
 ```sh
 if [ -n "${LONGCHINA_API_KEY:-}" ]; then
   echo "$LONGCHINA_API_KEY" | longchina login --with-token --json
-  longchina status --json
+  longchina status --json --skill-version 0.1.1
 fi
 ```
 
 ## Required workflow
 
-1. Run `longchina status --json` before data work.
+1. Run `longchina status --json --skill-version 0.1.1` before data work, and obey any required update in the returned `version` block before querying.
 2. Inspect available datasets with `longchina datasets --json` when the requested dataset or field is unclear.
 3. Fetch data with `longchina query ...`; prefer narrow `--fields`, explicit `--ts-code`, and bounded `--start`/`--end`.
 4. Prefer `--format json` for machine parsing and `--format csv` for user-facing tables.
-5. Report the returned data and include dataset name, filters, date range, fields, and cache/usage metadata when available.
-6. Do not fabricate prices, financial values, trading dates, returned rows, ratings, or usage numbers. If the CLI/API returns no rows, say that no rows were returned for the filters.
-7. Do not ask users to manually sync server data. If a query returns no rows or partial rows, report the exact filters, row counts, and available metadata instead of inventing or implying unavailable data.
+5. Use the CLI option `--order-by` for sorting when needed; do not use the API field name `order_by` as a command-line option.
+6. Report the returned data and include dataset name, filters, date range, fields, and cache/usage metadata when available.
+7. Do not fabricate prices, financial values, trading dates, returned rows, ratings, or usage numbers. If the CLI/API returns no rows, say that no rows were returned for the filters.
+8. Do not ask users to manually sync server data. If a query returns no rows or partial rows, report the exact filters, row counts, and available metadata instead of inventing or implying unavailable data.
 
 ## Agent command contract
 

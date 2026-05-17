@@ -18,5 +18,5 @@ The public installer downloads native CLI binaries from this repository's GitHub
 
 ```bash
 curl -fsSL https://longchina.vercel.app/install.sh | sh
-longchina status --json
+longchina status --json --skill-version 0.1.1
 ```
