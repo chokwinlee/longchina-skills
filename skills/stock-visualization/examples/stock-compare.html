@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Illustrative Stock Comparison</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --lc-page: oklch(97.5% 0.006 165);
+      --lc-surface: oklch(99% 0.005 165);
+      --lc-surface-soft: oklch(95.5% 0.008 165);
+      --lc-border: oklch(86% 0.018 165);
+      --lc-text: oklch(24% 0.012 165);
+      --lc-muted: oklch(46% 0.018 165);
+      --lc-accent: oklch(42% 0.12 165);
+      --lc-up: oklch(42% 0.13 150);
+      --lc-down: oklch(48% 0.16 28);
+      --lc-warn: oklch(56% 0.11 78);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--lc-page);
+      color: var(--lc-text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      line-height: 1.45;
+    }
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 34px 22px 44px;
+    }
+    header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 20px;
+      align-items: end;
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+    .lc-kicker {
+      margin: 0 0 7px;
+      color: var(--lc-accent);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .lc-subtitle {
+      max-width: 70ch;
+      margin: 10px 0 0;
+      color: var(--lc-muted);
+      font-size: 14px;
+    }
+    .lc-badge {
+      border: 1px solid var(--lc-border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--lc-surface);
+      color: var(--lc-muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .lc-section {
+      margin-top: 24px;
+    }
+    .lc-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .lc-comparison-card, .lc-panel {
+      background: var(--lc-surface);
+      border: 1px solid var(--lc-border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .lc-comparison-card__name {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .lc-comparison-card__code {
+      margin-top: 3px;
+      color: var(--lc-muted);
+      font-size: 12px;
+    }
+    .lc-comparison-card__meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 12px 0;
+    }
+    .lc-pill {
+      border: 1px solid var(--lc-border);
+      border-radius: 999px;
+      padding: 3px 8px;
+      color: oklch(38% 0.018 165);
+      font-size: 11px;
+    }
+    .lc-comparison-card__metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 14px;
+    }
+    .lc-label {
+      display: block;
+      color: var(--lc-muted);
+      font-size: 11px;
+    }
+    .lc-value {
+      display: block;
+      margin-top: 2px;
+      font-size: 14px;
+      font-weight: 650;
+    }
+    .lc-section-title {
+      margin: 0 0 10px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .lc-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--lc-border);
+      border-radius: 8px;
+      background: var(--lc-surface);
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 680px;
+    }
+    th, td {
+      border-bottom: 1px solid oklch(90% 0.012 165);
+      padding: 10px 12px;
+      text-align: right;
+      font-size: 12px;
+    }
+    th:first-child, td:first-child { text-align: left; }
+    th {
+      color: oklch(42% 0.018 165);
+      font-weight: 650;
+      background: var(--lc-surface-soft);
+    }
+    tr:last-child td { border-bottom: 0; }
+    .lc-row-date {
+      display: block;
+      color: var(--lc-muted);
+      font-size: 11px;
+      font-weight: 400;
+    }
+    .lc-chart-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: start;
+      margin-bottom: 14px;
+    }
+    .lc-return {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--lc-up);
+    }
+    svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+    .lc-axis { stroke: oklch(78% 0.016 165); stroke-width: 1; }
+    .lc-line-a { fill: none; stroke: var(--lc-accent); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .lc-line-b { fill: none; stroke: var(--lc-warn); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .lc-chart-label { fill: var(--lc-muted); font-size: 11px; }
+    .lc-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+      color: var(--lc-muted);
+      font-size: 12px;
+    }
+    .lc-swatch {
+      display: inline-block;
+      width: 18px;
+      height: 3px;
+      border-radius: 999px;
+      margin-right: 5px;
+      vertical-align: middle;
+      background: var(--lc-accent);
+    }
+    .lc-swatch[data-series="b"] { background: var(--lc-warn); }
+    .lc-source-footnote {
+      margin-top: 28px;
+      border-top: 1px solid var(--lc-border);
+      padding-top: 16px;
+      color: oklch(38% 0.018 165);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .lc-source-footnote h2 {
+      margin: 0 0 8px;
+      color: var(--lc-text);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .lc-source-footnote dl {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      gap: 6px 12px;
+      margin: 0;
+    }
+    .lc-source-footnote dt {
+      font-weight: 650;
+      color: oklch(30% 0.014 165);
+    }
+    .lc-source-footnote dd { margin: 0; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+    }
+    @media (max-width: 760px) {
+      header, .lc-grid { grid-template-columns: 1fr; }
+      main { padding: 22px 14px 34px; }
+      .lc-badge { justify-self: start; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <p class="lc-kicker">Example data, generated stock visualization</p>
+        <h1>Illustrative two-stock comparison</h1>
+        <p class="lc-subtitle">A compact research page composed from comparison cards, a metric matrix, a price trend chart, and source disclosure. Values in this file are illustrative, not live market data.</p>
+      </div>
+      <div class="lc-badge">Generated 2026-05-16 16:30 +08:00</div>
+    </header>
+
+    <section class="lc-grid" aria-label="Comparison cards">
+      <article class="lc-comparison-card">
+        <h2 class="lc-comparison-card__name">Example Bank</h2>
+        <div class="lc-comparison-card__code">000001.SZ, latest 20260515</div>
+        <div class="lc-comparison-card__meta">
+          <span class="lc-pill">Banking</span>
+          <span class="lc-pill">SZSE</span>
+          <span class="lc-pill">Listed 19910403</span>
+        </div>
+        <div class="lc-comparison-card__metrics">
+          <span><span class="lc-label">Close</span><span class="lc-value">11.73 CNY</span></span>
+          <span><span class="lc-label">PE TTM</span><span class="lc-value">5.94x</span></span>
+          <span><span class="lc-label">PB</span><span class="lc-value">0.62x</span></span>
+          <span><span class="lc-label">Market value</span><span class="lc-value">227.7B CNY</span></span>
+        </div>
+      </article>
+      <article class="lc-comparison-card">
+        <h2 class="lc-comparison-card__name">Example Industry Peer</h2>
+        <div class="lc-comparison-card__code">600000.SH, latest 20260515</div>
+        <div class="lc-comparison-card__meta">
+          <span class="lc-pill">Banking</span>
+          <span class="lc-pill">SSE</span>
+          <span class="lc-pill">Listed 19991110</span>
+        </div>
+        <div class="lc-comparison-card__metrics">
+          <span><span class="lc-label">Close</span><span class="lc-value">8.42 CNY</span></span>
+          <span><span class="lc-label">PE TTM</span><span class="lc-value">6.38x</span></span>
+          <span><span class="lc-label">PB</span><span class="lc-value">0.54x</span></span>
+          <span><span class="lc-label">Market value</span><span class="lc-value">154.2B CNY</span></span>
+        </div>
+      </article>
+    </section>
+
+    <section class="lc-section">
+      <h2 class="lc-section-title">Metric comparison</h2>
+      <div class="lc-table-wrap">
+        <table>
+          <thead>
+            <tr><th>Security</th><th>Close (CNY)</th><th>PE TTM (x)</th><th>PB (x)</th><th>Market value (CNY)</th><th>Turnover (%)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Example Bank <span class="lc-row-date">000001.SZ, 20260515</span></td><td>11.73</td><td>5.94</td><td>0.62</td><td>227.7B</td><td>0.81</td></tr>
+            <tr><td>Example Industry Peer <span class="lc-row-date">600000.SH, 20260515</span></td><td>8.42</td><td>6.38</td><td>0.54</td><td>154.2B</td><td>0.66</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="lc-section lc-panel" aria-labelledby="price-trend-title">
+      <div class="lc-chart-head">
+        <div>
+          <h2 class="lc-section-title" id="price-trend-title">Close price trend</h2>
+          <p class="lc-subtitle">Five illustrative trading dates, normalized to each security's own CNY close scale.</p>
+        </div>
+        <div class="lc-return">Example Bank +2.71%</div>
+      </div>
+      <svg viewBox="0 0 720 260" role="img" aria-label="Illustrative close price trend for two securities">
+        <line class="lc-axis" x1="52" y1="210" x2="680" y2="210"></line>
+        <line class="lc-axis" x1="52" y1="38" x2="52" y2="210"></line>
+        <polyline class="lc-line-a" points="52,170 209,132 366,202 523,92 680,78"></polyline>
+        <polyline class="lc-line-b" points="52,176 209,132 366,194 523,88 680,116"></polyline>
+        <text class="lc-chart-label" x="52" y="238">20260511</text>
+        <text class="lc-chart-label" x="624" y="238">20260515</text>
+        <text class="lc-chart-label" x="12" y="44">High</text>
+        <text class="lc-chart-label" x="12" y="212">Low</text>
+      </svg>
+      <div class="lc-legend">
+        <span><span class="lc-swatch"></span>Example Bank</span>
+        <span><span class="lc-swatch" data-series="b"></span>Example Industry Peer</span>
+      </div>
+    </section>
+
+    <footer class="lc-source-footnote" aria-label="Data source and risk notes">
+      <h2>Data source and risk notes</h2>
+      <dl>
+        <dt>Generated</dt><dd>2026-05-16T16:30:00+08:00</dd>
+        <dt>Sources</dt><dd><code>stock-basic</code>, <code>daily</code>, <code>daily-basic</code></dd>
+        <dt>Fields</dt><dd><code>ts_code</code>, <code>name</code>, <code>industry</code>, <code>trade_date</code>, <code>close</code>, <code>pe_ttm</code>, <code>pb</code>, <code>total_mv</code>, <code>turnover_rate</code></dd>
+        <dt>Filters</dt><dd><code>000001.SZ</code> and <code>600000.SH</code>, 20260511 to 20260515</dd>
+        <dt>Rows</dt><dd>2 stock-basic rows, 10 daily rows, 10 daily-basic rows in the illustrative input.</dd>
+        <dt>Notes</dt><dd>This file uses illustrative example values for asset verification. Missing values should be shown as <code>--</code> in generated reports.</dd>
+        <dt>Risk</dt><dd>This visualization is not investment advice. Verify returned rows, dates, and assumptions before making decisions.</dd>
+      </dl>
+    </footer>
+  </main>
+</body>
+</html>

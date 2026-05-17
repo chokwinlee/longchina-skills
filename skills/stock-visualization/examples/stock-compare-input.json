@@ -1,0 +1,87 @@
+{
+  "example_data": true,
+  "title": "Illustrative two-stock comparison",
+  "securities": [
+    {
+      "profile": {
+        "ts_code": "000001.SZ",
+        "symbol": "000001",
+        "name": "Example Bank",
+        "exchange": "SZSE",
+        "market": "Main Board",
+        "industry": "Banking",
+        "list_date": "19910403"
+      },
+      "snapshot": {
+        "trade_date": "20260515",
+        "metrics": {
+          "close": { "label": "Close", "value": 11.73, "unit": "CNY", "source_dataset": "daily" },
+          "pe_ttm": { "label": "PE TTM", "value": 5.94, "unit": "x", "source_dataset": "daily-basic" },
+          "pb": { "label": "PB", "value": 0.62, "unit": "x", "source_dataset": "daily-basic" },
+          "total_mv": { "label": "Market value", "value": 227680000000, "unit": "CNY", "source_dataset": "daily-basic" },
+          "turnover_rate": { "label": "Turnover", "value": 0.81, "unit": "%", "source_dataset": "daily-basic" }
+        }
+      },
+      "prices": [
+        { "trade_date": "20260511", "close": 11.42 },
+        { "trade_date": "20260512", "close": 11.56 },
+        { "trade_date": "20260513", "close": 11.31 },
+        { "trade_date": "20260514", "close": 11.68 },
+        { "trade_date": "20260515", "close": 11.73 }
+      ]
+    },
+    {
+      "profile": {
+        "ts_code": "600000.SH",
+        "symbol": "600000",
+        "name": "Example Industry Peer",
+        "exchange": "SSE",
+        "market": "Main Board",
+        "industry": "Banking",
+        "list_date": "19991110"
+      },
+      "snapshot": {
+        "trade_date": "20260515",
+        "metrics": {
+          "close": { "label": "Close", "value": 8.42, "unit": "CNY", "source_dataset": "daily" },
+          "pe_ttm": { "label": "PE TTM", "value": 6.38, "unit": "x", "source_dataset": "daily-basic" },
+          "pb": { "label": "PB", "value": 0.54, "unit": "x", "source_dataset": "daily-basic" },
+          "total_mv": { "label": "Market value", "value": 154200000000, "unit": "CNY", "source_dataset": "daily-basic" },
+          "turnover_rate": { "label": "Turnover", "value": 0.66, "unit": "%", "source_dataset": "daily-basic" }
+        }
+      },
+      "prices": [
+        { "trade_date": "20260511", "close": 8.31 },
+        { "trade_date": "20260512", "close": 8.39 },
+        { "trade_date": "20260513", "close": 8.28 },
+        { "trade_date": "20260514", "close": 8.47 },
+        { "trade_date": "20260515", "close": 8.42 }
+      ]
+    }
+  ],
+  "source_disclosure": {
+    "generated_at": "2026-05-16T16:30:00+08:00",
+    "data_sources": [
+      {
+        "dataset": "stock-basic",
+        "fields": ["ts_code", "name", "exchange", "market", "industry", "list_date"],
+        "filters": { "ts_code": ["000001.SZ", "600000.SH"] },
+        "row_count": 2
+      },
+      {
+        "dataset": "daily",
+        "fields": ["ts_code", "trade_date", "close"],
+        "filters": { "ts_code": ["000001.SZ", "600000.SH"], "start": "20260511", "end": "20260515" },
+        "row_count": 10
+      },
+      {
+        "dataset": "daily-basic",
+        "fields": ["ts_code", "trade_date", "pe_ttm", "pb", "total_mv", "turnover_rate"],
+        "filters": { "ts_code": ["000001.SZ", "600000.SH"], "start": "20260511", "end": "20260515" },
+        "row_count": 10
+      }
+    ],
+    "notes": ["Illustrative example data, not live market data."],
+    "risk_note": "This visualization is not investment advice."
+  }
+}

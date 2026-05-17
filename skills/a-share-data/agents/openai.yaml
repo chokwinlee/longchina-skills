@@ -1,0 +1,8 @@
+interface:
+  display_name: "longchina Data"
+  short_description: "Fetch A-share data through longchina CLI/API"
+  brand_color: "#0F8F67"
+  default_prompt: "Use $longchina-data to fetch P0 A-share market, master, calendar, and indicator data with the longchina CLI."
+
+policy:
+  allow_implicit_invocation: true
