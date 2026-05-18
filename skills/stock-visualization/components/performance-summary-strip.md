@@ -14,8 +14,8 @@ Show the first-screen facts for a one-year stock performance report: period retu
     "benchmark_return_pct": 4.1,
     "excess_return_pct": 8.3,
     "max_drawdown_pct": -18.6,
-    "high": { "trade_date": "20260210", "value": 58.4 },
-    "low": { "trade_date": "20250821", "value": 41.2 },
+    "high": { "date": "20260210", "value": 58.4 },
+    "low": { "date": "20250821", "value": 41.2 },
     "avg_amount": 128.4,
     "volatility_pct": 22.8
   }

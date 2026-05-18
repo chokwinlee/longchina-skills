@@ -12,10 +12,10 @@ Use this recipe when the user asks for a sortable table over a stock pool or a c
 
 Use `longchina-data` and fetch:
 
-- `stock-basic` for names, industries, exchange, market, and lifecycle status.
-- `daily-basic` for valuation, turnover, shares, and market value.
-- `daily` only when the table includes close price or recent return.
-- `trade-cal` when translating a natural date into latest trading date.
+- `securities` for names, industries, exchange, market, and lifecycle status.
+- `daily-metrics` for valuation, turnover, shares, and market value.
+- `prices` only when the table includes close price or recent return.
+- `trading-calendar` when translating a natural date into latest trading date.
 
 ## Data Contracts
 

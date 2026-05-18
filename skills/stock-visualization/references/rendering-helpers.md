@@ -6,12 +6,12 @@ For OHLC stock price charts, use `references/chart-engine.md` and `components/ca
 
 ## Row Preparation
 
-Group time-series rows by `ts_code`, then sort each group by ascending `trade_date`. Use the latest sorted row for cards, metric snapshots, comparison matrices, and default table rows.
+Group time-series rows by `symbol`, then sort each group by ascending `date`. Use the latest sorted row for cards, metric snapshots, comparison matrices, and default table rows.
 
 When joining datasets:
 
-- Join `stock-basic` by `ts_code`.
-- Join latest `daily` and `daily-basic` rows by `ts_code`; do not assume both latest dates are the same.
+- Join `securities` by `symbol`.
+- Join latest `prices` and `daily-metrics` rows by `symbol`; do not assume both latest dates are the same.
 - Keep each source date visible when latest dates differ.
 - Keep `null` for known missing values until final display.
 
@@ -83,7 +83,7 @@ rows.sort((a, b) => {
 });
 ```
 
-For text columns, use `localeCompare` and include stable identifiers such as `ts_code` in the visible row.
+For text columns, use `localeCompare` and include stable identifiers such as `symbol` in the visible row.
 
 ## Source Notes
 

@@ -15,7 +15,7 @@ Generated HTML should default to:
 Examples of acceptable neutral language:
 
 - `PE TTM is higher than the comparison group on the latest returned trading date.`
-- `No daily-basic rows were returned for the selected interval.`
+- `No daily-metrics rows were returned for the selected interval.`
 - `The two securities use different latest trading dates; inspect row-level dates before comparing values.`
 
 ## Investment Views

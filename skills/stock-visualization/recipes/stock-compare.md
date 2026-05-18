@@ -12,10 +12,10 @@ Use this recipe when the user asks to compare two to five A-share securities usi
 
 Use `longchina-data` and fetch:
 
-- `stock-basic` for `ts_code`, `name`, `industry`, `exchange`, `market`, `list_date`.
-- `daily` for `ts_code`, `trade_date`, `close`, `pct_chg`, `vol`, `amount`.
-- `daily-basic` for `ts_code`, `trade_date`, `pe`, `pe_ttm`, `pb`, `ps`, `ps_ttm`, `dv_ratio`, `dv_ttm`, `total_mv`, `turnover_rate`.
-- `trade-cal` when the user gives natural dates that may not be trading days.
+- `securities` for `symbol`, `name`, `industry`, `exchange`, `market`, `listing_date`.
+- `prices` for `symbol`, `date`, `close`, `percent_change`, `volume`, `amount`.
+- `daily-metrics` for `symbol`, `date`, `pe`, `pe_ttm`, `pb`, `ps`, `ps_ttm`, `dividend_ratio`, `dividend_ttm`, `total_market_value`, `turnover_rate`.
+- `trading-calendar` when the user gives natural dates that may not be trading days.
 
 ## Data Contracts
 
@@ -23,7 +23,7 @@ Fill:
 
 - `SecurityProfile` for each security.
 - `CandlePoint` for each valid OHLC row, or `PricePoint` when only close-price data is available.
-- `MetricSnapshot` for the latest returned `daily` and `daily-basic` values.
+- `MetricSnapshot` for the latest returned `prices` and `daily-metrics` values.
 - `ComparisonRow` for the matrix.
 - `SourceDisclosure` for the final footnote.
 
@@ -39,10 +39,10 @@ Compose:
 
 ## Missing Data Behavior
 
-- If a security has no `stock-basic` row, use the requested `ts_code` as the visible label and note the missing profile row.
+- If a security has no `securities` row, use the requested `symbol` as the visible label and note the missing profile row.
 - If a metric is missing, show `--` in cards and matrix cells.
 - If latest dates differ across securities, show each date in cards and matrix rows.
-- If no `daily` rows are returned for a security, omit its candlestick or price trend and note the query filters.
+- If no `prices` rows are returned for a security, omit its candlestick or price trend and note the query filters.
 - If OHLC fields are incomplete, fall back to an indexed close-price line and state why the candlestick panel was not rendered.
 
 ## Required Footnote Details

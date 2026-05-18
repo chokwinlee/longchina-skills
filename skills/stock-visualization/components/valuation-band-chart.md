@@ -11,7 +11,7 @@ Show current valuation in the context of the selected period: PE/PB current valu
   "valuation": {
     "pe_ttm": { "current": 8.9, "min": 7.2, "max": 10.8, "percentile": 61 },
     "pb": { "current": 0.96, "min": 0.78, "max": 1.12, "percentile": 54 },
-    "points": [{ "trade_date": "20260518", "pe_ttm": 8.9, "pb": 0.96 }]
+    "points": [{ "date": "20260518", "pe_ttm": 8.9, "pb": 0.96 }]
   }
 }
 ```
@@ -40,7 +40,7 @@ Optional: percentile fields when the sample is too short or missing.
 
 ## Missing Data Behavior
 
-If `daily-basic` was not returned, omit this block and disclose the missing dataset in Source Footnote. Do not fabricate valuation percentiles.
+If `daily-metrics` was not returned, omit this block and disclose the missing dataset in Source Footnote. Do not fabricate valuation percentiles.
 
 ## Example
 

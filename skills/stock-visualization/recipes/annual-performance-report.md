@@ -12,10 +12,10 @@ Use this recipe when the user asks for 最近一年表现, one-year performance,
 
 Use `longchina-data` and fetch:
 
-- `stock-basic` for identity and listing metadata.
-- `daily` for one year of OHLCV rows.
-- `daily-basic` for PE TTM, PB, turnover, market value, and other available daily metrics.
-- `trade-cal` to resolve natural start/end dates into trading days.
+- `securities` for identity and listing metadata.
+- `prices` for one year of OHLCV rows.
+- `daily-metrics` for PE TTM, PB, turnover, market value, and other available daily metrics.
+- `trading-calendar` to resolve natural start/end dates into trading days.
 - Benchmark rows only when the user supplies a benchmark dataset or the longchina runtime exposes one. Do not fabricate benchmark values.
 - Filing, dividend, or event rows only when those datasets are available or the user supplies them.
 
@@ -38,10 +38,10 @@ Fill:
 - Calculate report-level values from returned rows according to `references/annual-report-calculations.md`.
 - Resolve natural date ranges to the actual first and last returned trading rows.
 - Calculate return windows from trading-row offsets, not calendar-day guesses.
-- Align benchmark rows by `trade_date` before calculating benchmark returns, indexed benchmark series, or excess return.
+- Align benchmark rows by `date` before calculating benchmark returns, indexed benchmark series, or excess return.
 - Use close-to-close running peaks for drawdown and recovery date.
 - Calculate volatility from close-to-close daily returns and annualize with `sqrt(252)`.
-- Calculate valuation current/min/max/percentile from valid `daily-basic` values inside the report period.
+- Calculate valuation current/min/max/percentile from valid `daily-metrics` values inside the report period.
 - Keep technical state factual. Do not turn MA, MACD, KDJ, BOLL, or RSI states into buy/sell/hold advice.
 - Do not perform unit conversion for amount, volume, market value, or valuation fields unless the source unit is known and stated in the footnote.
 
@@ -75,7 +75,7 @@ Follow the repository design language:
 
 Recommended page order:
 
-1. Header: company, ts_code, one-year period, generated timestamp.
+1. Header: company, symbol, one-year period, generated timestamp.
 2. Summary strip: latest price, return, benchmark, excess, max drawdown, yearly range.
 3. Main analysis band: candlestick chart on the left, yearly facts and technical state on the right.
 4. Return windows and benchmark comparison.
@@ -87,7 +87,7 @@ Recommended page order:
 ## Missing Data Behavior
 
 - If benchmark data is missing, omit benchmark and excess-return claims.
-- If `daily-basic` is missing, omit valuation context.
+- If `daily-metrics` is missing, omit valuation context.
 - If event datasets are missing, show a note that no events were supplied.
 - If fewer than 120 trading rows are available, omit MA120 and disclose warmup limitations.
 - Never turn technical state into buy, sell, or hold advice.

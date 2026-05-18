@@ -12,28 +12,28 @@ Compare 2 to 5 securities across core metrics in a semantic table. Use it for qu
     { "key": "close", "label": "Close", "unit": "CNY" },
     { "key": "pe_ttm", "label": "PE TTM", "unit": "x" },
     { "key": "pb", "label": "PB", "unit": "x" },
-    { "key": "total_mv", "label": "Market value", "unit": "CNY" }
+    { "key": "total_market_value", "label": "Market value", "unit": "CNY" }
   ],
   "rows": [
     {
-      "ts_code": "000001.SZ",
+      "symbol": "000001.SZ",
       "name": "Example Bank",
-      "trade_date": "20260515",
-      "values": { "close": 11.73, "pe_ttm": 5.94, "pb": 0.62, "total_mv": 227680000000 }
+      "date": "20260515",
+      "values": { "close": 11.73, "pe_ttm": 5.94, "pb": 0.62, "total_market_value": 227680000000 }
     }
   ]
 }
 ```
 
-Required: `columns[].key`, `columns[].label`, `rows[].ts_code`, `rows[].name`, `rows[].values`.
+Required: `columns[].key`, `columns[].label`, `rows[].symbol`, `rows[].name`, `rows[].values`.
 
-Optional: `columns[].unit`, `rows[].trade_date`.
+Optional: `columns[].unit`, `rows[].date`.
 
 ## Configuration
 
 - `max_rows`: 5 for comparison pages.
 - `show_units`: default true.
-- `show_trade_date`: default true.
+- `show_date`: default true.
 - `compact_numbers`: default true for large CNY values.
 
 ## HTML Snippet

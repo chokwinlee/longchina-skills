@@ -13,17 +13,17 @@ Use this recipe when the user asks for K line, K线, candlestick, 蜡烛图, Tra
 
 Use `longchina-data` and fetch:
 
-- `stock-basic` for `ts_code`, `name`, `industry`, `exchange`, `market`, `list_date`.
-- `daily` for `ts_code`, `trade_date`, `open`, `high`, `low`, `close`, `pre_close`, `pct_chg`, `vol`, `amount`.
-- `daily-basic` when tooltip, valuation, turnover, market value, or comparison metrics are requested.
-- `trade-cal` when the user gives natural dates that may not be trading days.
+- `securities` for `symbol`, `name`, `industry`, `exchange`, `market`, `listing_date`.
+- `prices` for `symbol`, `date`, `open`, `high`, `low`, `close`, `previous_close`, `percent_change`, `volume`, `amount`.
+- `daily-metrics` when tooltip, valuation, turnover, market value, or comparison metrics are requested.
+- `trading-calendar` when the user gives natural dates that may not be trading days.
 
 ## Data Contracts
 
 Fill:
 
 - `SecurityProfile` for listing metadata.
-- `CandlePoint` for every valid `daily` row.
+- `CandlePoint` for every valid `prices` row.
 - `OverlaySeries` for MA and BOLL overlays.
 - `IndicatorPaneSeries` for volume, MACD, KDJ, and optional RSI.
 - `TooltipSnapshot` by ISO date.
@@ -36,13 +36,13 @@ Compose:
 1. `candlestick-chart.md`.
 2. `indicator-pane.md` for volume, MACD, KDJ, and optional RSI.
 3. `chart-tooltip.md`.
-4. `sortable-table.md` for the latest OHLCV and selected daily-basic metrics when useful.
+4. `sortable-table.md` for the latest OHLCV and selected daily-metrics metrics when useful.
 5. `source-footnote.md`.
 
 ## Missing Data Behavior
 
-- If no `daily` OHLC rows are returned, show an empty state and still include source disclosure.
-- If `daily-basic` is unavailable, omit valuation fields from the tooltip and state that only price/volume fields were returned.
+- If no `prices` OHLC rows are returned, show an empty state and still include source disclosure.
+- If `daily-metrics` is unavailable, omit valuation fields from the tooltip and state that only price/volume fields were returned.
 - If the selected range is too short for MA60, KDJ, RSI, or BOLL, omit the unavailable series and state the warmup requirement.
 - Do not interpolate missing trading dates.
 

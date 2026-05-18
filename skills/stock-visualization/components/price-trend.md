@@ -13,21 +13,21 @@ Before writing SVG `points`, use `references/rendering-helpers.md` to convert th
   "title": "Example Bank price trend",
   "subtitle": "20260511 to 20260515",
   "series": [
-    { "trade_date": "20260511", "close": 11.42, "ma5": null, "ma20": null },
-    { "trade_date": "20260512", "close": 11.56, "ma5": null, "ma20": null },
-    { "trade_date": "20260513", "close": 11.31, "ma5": null, "ma20": null },
-    { "trade_date": "20260514", "close": 11.68, "ma5": null, "ma20": null },
-    { "trade_date": "20260515", "close": 11.73, "ma5": 11.54, "ma20": null }
+    { "date": "20260511", "close": 11.42, "ma5": null, "ma20": null },
+    { "date": "20260512", "close": 11.56, "ma5": null, "ma20": null },
+    { "date": "20260513", "close": 11.31, "ma5": null, "ma20": null },
+    { "date": "20260514", "close": 11.68, "ma5": null, "ma20": null },
+    { "date": "20260515", "close": 11.73, "ma5": 11.54, "ma20": null }
   ],
   "summary": {
     "interval_return_pct": 2.71,
     "latest_close": 11.73,
-    "latest_trade_date": "20260515"
+    "latest_date": "20260515"
   }
 }
 ```
 
-Required: `title`, `series[].trade_date`, `series[].close`.
+Required: `title`, `series[].date`, `series[].close`.
 
 Optional: `subtitle`, `series[].ma5`, `series[].ma20`, `summary`.
 
@@ -82,4 +82,4 @@ If `series` is empty, render a bordered empty state with the configured `empty_l
 
 ## Example
 
-Use in `recipes/stock-compare.md` after calculating `interval_return_pct`, `ma5`, and any other requested series from `daily` rows.
+Use in `recipes/stock-compare.md` after calculating `interval_return_pct`, `ma5`, and any other requested series from `prices` rows.

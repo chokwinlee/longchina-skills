@@ -11,13 +11,13 @@ Compare indexed stock performance against a benchmark such as 沪深300, industr
   "benchmark": {
     "name": "沪深300",
     "points": [
-      { "trade_date": "20260518", "stock_index": 112.4, "benchmark_index": 104.1 }
+      { "date": "20260518", "stock_index": 112.4, "benchmark_index": 104.1 }
     ]
   }
 }
 ```
 
-Required: `name`, `points[].trade_date`, `points[].stock_index`, `points[].benchmark_index`.
+Required: `name`, `points[].date`, `points[].stock_index`, `points[].benchmark_index`.
 
 Optional: benchmark code, benchmark source disclosure.
 

@@ -13,17 +13,17 @@ Before writing SVG `points`, use `references/rendering-helpers.md` to convert th
   "title": "PE TTM",
   "unit": "x",
   "points": [
-    { "trade_date": "20260511", "value": 5.82 },
-    { "trade_date": "20260512", "value": 5.86 },
-    { "trade_date": "20260513", "value": 5.74 },
-    { "trade_date": "20260514", "value": 5.91 },
-    { "trade_date": "20260515", "value": 5.94 }
+    { "date": "20260511", "value": 5.82 },
+    { "date": "20260512", "value": 5.86 },
+    { "date": "20260513", "value": 5.74 },
+    { "date": "20260514", "value": 5.91 },
+    { "date": "20260515", "value": 5.94 }
   ],
-  "source_dataset": "daily-basic"
+  "source_dataset": "daily-metrics"
 }
 ```
 
-Required: `title`, `points[].trade_date`, `points[].value`, `source_dataset`.
+Required: `title`, `points[].date`, `points[].value`, `source_dataset`.
 
 Optional: `unit`, `description`.
 
@@ -48,7 +48,7 @@ Optional: `unit`, `description`.
     .lc-metric-series__label { fill: oklch(46% 0.018 165); font-size: 11px; }
   </style>
   <h2 class="lc-metric-series__title" id="lc-metric-series-title">PE TTM</h2>
-  <p class="lc-metric-series__meta">daily-basic, unit x</p>
+  <p class="lc-metric-series__meta">daily-metrics, unit x</p>
   <svg viewBox="0 0 520 180" role="img" aria-label="PE TTM metric series">
     <line class="lc-metric-series__grid" x1="36" y1="32" x2="500" y2="32"></line>
     <line class="lc-metric-series__grid" x1="36" y1="136" x2="500" y2="136"></line>
@@ -66,4 +66,4 @@ Omit null points from the plotted line. If all points are null or missing, rende
 
 ## Example
 
-Use after mapping `daily-basic.pe_ttm` rows into `MetricPoint` objects.
+Use after mapping `daily-metrics.pe_ttm` rows into `MetricPoint` objects.

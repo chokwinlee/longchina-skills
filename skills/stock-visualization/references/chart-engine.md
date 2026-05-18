@@ -64,7 +64,7 @@ Register `subscribeCrosshairMove` on every chart instance. Build the tooltip fro
 
 Required tooltip fields:
 
-- Date and source `trade_date`.
+- Date and source `date`.
 - Open, high, low, close.
 - Change percentage when present.
 - Volume and amount when present.

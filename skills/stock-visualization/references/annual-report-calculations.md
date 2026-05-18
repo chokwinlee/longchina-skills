@@ -2,12 +2,12 @@
 
 Agents calculate annual report metrics before rendering components. HTML examples are display models only; they are not the source of truth for financial calculations.
 
-Use returned `longchina` rows only. Sort all time-series inputs ascending by `trade_date`. Keep raw numeric values in the normalized data object and round only during display.
+Use returned `longchina` rows only. Sort all time-series inputs ascending by `date`. Keep raw numeric values in the normalized data object and round only during display.
 
 ## Input Preconditions
 
-- Use `daily` rows for price, volume, amount, and candlestick-derived metrics.
-- Use `daily-basic` rows for valuation metrics such as `pe_ttm` and `pb`.
+- Use `prices` rows for price, volume, amount, and candlestick-derived metrics.
+- Use `daily-metrics` rows for valuation metrics such as `pe_ttm` and `pb`.
 - Use benchmark rows only when the user supplies them or the runtime exposes them.
 - Do not fabricate missing trading dates, benchmark values, filing events, ratings, or valuation values.
 - If adjusted prices are used, state the adjustment method in `SourceDisclosure.notes`; otherwise calculate from the returned raw OHLC rows.
@@ -46,7 +46,7 @@ Calculate each window's drawdown from rows inside that same window.
 
 ## Benchmark Alignment
 
-Benchmark calculations must use stock and benchmark rows aligned by `trade_date`. Use an inner join by date by default.
+Benchmark calculations must use stock and benchmark rows aligned by `date`. Use an inner join by date by default.
 
 ```text
 stock_return_pct = (aligned_last_stock_close - aligned_first_stock_close) / aligned_first_stock_close * 100
@@ -106,7 +106,7 @@ Average amount uses valid numeric `amount` rows in the selected range:
 
 ```text
 avg_amount = average(amount)
-avg_vol = average(vol)
+avg_volume = average(volume)
 ```
 
 Keep source units in normalized data. Convert display units, such as CNY to `亿元`, only when the source unit is known and stated in the footnote.
@@ -168,6 +168,6 @@ Before rendering `AnnualPerformanceReport`, verify:
 - `return_windows` uses the stated trading-row windows.
 - `benchmark` and excess returns use aligned benchmark rows only.
 - `drawdown` includes peak, trough, recovery date, and drawdown points.
-- `valuation` includes current, min, max, percentile, and valuation points when `daily-basic` data exists.
+- `valuation` includes current, min, max, percentile, and valuation points when `daily-metrics` data exists.
 - `technical_state` cites the calculated evidence for each state.
 - `source_disclosure` states datasets, row counts, period boundaries, units, benchmark source, missing values, and risk note.

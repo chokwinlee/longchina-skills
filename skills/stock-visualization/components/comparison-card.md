@@ -9,33 +9,33 @@ Show a compact security snapshot for comparison pages. This component is for 1 s
 ```json
 {
   "profile": {
-    "ts_code": "000001.SZ",
+    "symbol": "000001.SZ",
     "name": "Example Bank",
     "industry": "银行",
     "exchange": "SZSE",
-    "list_date": "19910403"
+    "listing_date": "19910403"
   },
   "snapshot": {
-    "trade_date": "20260515",
+    "date": "20260515",
     "metrics": {
       "close": { "label": "Close", "value": 11.73, "unit": "CNY" },
       "pe_ttm": { "label": "PE TTM", "value": 5.94, "unit": "x" },
       "pb": { "label": "PB", "value": 0.62, "unit": "x" },
-      "total_mv": { "label": "Market value", "value": 227680000000, "unit": "CNY" }
+      "total_market_value": { "label": "Market value", "value": 227680000000, "unit": "CNY" }
     }
   }
 }
 ```
 
-Required: `profile.ts_code`, `profile.name`, `snapshot.metrics`.
+Required: `profile.symbol`, `profile.name`, `snapshot.metrics`.
 
-Optional: `profile.industry`, `profile.exchange`, `profile.list_date`, `snapshot.trade_date`.
+Optional: `profile.industry`, `profile.exchange`, `profile.listing_date`, `snapshot.date`.
 
 ## Configuration
 
-- `primary_metrics`: recommended `close`, `pe_ttm`, `pb`, `total_mv`.
+- `primary_metrics`: recommended `close`, `pe_ttm`, `pb`, `total_market_value`.
 - `compact_market_value`: render large CNY values as `227.7B CNY`.
-- `show_listing`: default true when `list_date` exists.
+- `show_listing`: default true when `listing_date` exists.
 
 ## HTML Snippet
 

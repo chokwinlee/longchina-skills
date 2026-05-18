@@ -15,14 +15,14 @@ Render a bounded stock pool or constrained market subset as a sortable metric ta
     { "key": "turnover_rate", "label": "Turnover", "type": "number", "unit": "%" }
   ],
   "rows": [
-    { "ts_code": "000001.SZ", "name": "Example Bank", "pe_ttm": 5.94, "pb": 0.62, "turnover_rate": 0.81 }
+    { "symbol": "000001.SZ", "name": "Example Bank", "pe_ttm": 5.94, "pb": 0.62, "turnover_rate": 0.81 }
   ]
 }
 ```
 
-Required: `columns`, `rows`, and a stable security identifier such as `ts_code`.
+Required: `columns`, `rows`, and a stable security identifier such as `symbol`.
 
-Optional: `unit`, `description`, `trade_date`.
+Optional: `unit`, `description`, `date`.
 
 ## Configuration
 

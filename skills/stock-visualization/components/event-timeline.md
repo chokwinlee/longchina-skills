@@ -9,12 +9,12 @@ Show events that explain or contextualize price movement: earnings, dividends, f
 ```json
 {
   "events": [
-    { "trade_date": "20260320", "kind": "earnings", "title": "Annual report released", "summary": "Revenue +8.4%; net profit +6.1%." }
+    { "date": "20260320", "kind": "earnings", "title": "Annual report released", "summary": "Revenue +8.4%; net profit +6.1%." }
   ]
 }
 ```
 
-Required: `trade_date`, `kind`, `title`.
+Required: `date`, `kind`, `title`.
 
 Optional: `summary`, `source_dataset`, `source_url`.
 

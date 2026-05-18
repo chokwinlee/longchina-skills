@@ -12,10 +12,10 @@ Use this recipe when the user asks for price movement, valuation movement, turno
 
 Use `longchina-data` and fetch:
 
-- `daily` for close, OHLCV, percentage change, and volume.
-- `daily-basic` for PE, PB, PS, market value, turnover, and dividend metrics.
-- `adj-factor` only when the user asks for adjusted price behavior or the price series requires raw adjustment factors.
-- `trade-cal` to validate date ranges when needed.
+- `prices` for close, OHLCV, percentage change, and volume.
+- `daily-metrics` for PE, PB, PS, market value, turnover, and dividend metrics.
+- `adjustments` only when the user asks for adjusted price behavior or the price series requires raw adjustment factors.
+- `trading-calendar` to validate date ranges when needed.
 
 ## Data Contracts
 

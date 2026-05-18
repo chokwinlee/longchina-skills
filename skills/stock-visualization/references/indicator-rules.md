@@ -2,7 +2,7 @@
 
 Agents calculate indicators before rendering components. Component snippets display prepared values and do not own financial calculations.
 
-Use returned `longchina` rows only. Sort time-series input ascending by `trade_date` before calculation.
+Use returned `longchina` rows only. Sort time-series input ascending by `date` before calculation.
 
 ## Simple Moving Average
 
@@ -31,8 +31,8 @@ If `first_close` is missing or zero, mark the interval return unavailable. Do no
 For a chosen window `n`, compare the latest `n` valid volume values with the immediately preceding `n` valid volume values:
 
 ```text
-latest_avg = average(vol[last n points])
-prior_avg = average(vol[previous n points])
+latest_avg = average(volume[last n points])
+prior_avg = average(volume[previous n points])
 volume_change_pct = (latest_avg - prior_avg) / prior_avg * 100
 ```
 
@@ -42,8 +42,8 @@ If either window is incomplete or `prior_avg` is zero, mark the value unavailabl
 
 For A-share charts, default volume bar color follows the candle state:
 
-- Up bar: `close >= pre_close` when `pre_close` exists, otherwise `close >= open`.
-- Down bar: `close < pre_close` when `pre_close` exists, otherwise `close < open`.
+- Up bar: `close >= previous_close` when `previous_close` exists, otherwise `close >= open`.
+- Down bar: `close < previous_close` when `previous_close` exists, otherwise `close < open`.
 
 Use the same red/up and green/down convention as the candlestick pane unless the report explicitly labels a different convention. Store the color class or final color on each volume point; do not derive it from rendered pixels.
 

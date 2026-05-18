@@ -11,13 +11,13 @@ Display exact daily values while the user hovers over candlesticks or lower pane
   "snapshots": {
     "2026-05-15": {
       "time": "2026-05-15",
-      "trade_date": "20260515",
+      "date": "20260515",
       "open": 51.2,
       "high": 52.8,
       "low": 50.9,
       "close": 52.2,
-      "pct_chg": 2.71,
-      "vol": 874512.34,
+      "percent_change": 2.71,
+      "volume": 874512.34,
       "amount": 998231.12,
       "macd": 0.22,
       "dif": 0.68,
@@ -31,7 +31,7 @@ Display exact daily values while the user hovers over candlesticks or lower pane
 
 Required: `snapshots[time].time`, `open`, `high`, `low`, `close` for candlestick tooltips.
 
-Optional: `trade_date`, `pct_chg`, `vol`, `amount`, indicator fields, daily-basic metrics.
+Optional: `date`, `percent_change`, `volume`, `amount`, indicator fields, daily-metrics metrics.
 
 ## Configuration
 

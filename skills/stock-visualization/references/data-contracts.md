@@ -6,79 +6,79 @@ Dates use `YYYYMMDD` unless a component explicitly formats them for display. Num
 
 ## SecurityProfile
 
-Use for company and listing metadata from `stock-basic`.
+Use for company and listing metadata from `securities`.
 
 ```json
 {
-  "ts_code": "000001.SZ",
+  "symbol": "000001.SZ",
   "symbol": "000001",
   "name": "Example Bank",
   "exchange": "SZSE",
   "market": "主板",
   "industry": "银行",
   "area": "深圳",
-  "list_status": "L",
-  "list_date": "19910403",
-  "delist_date": null
+  "listing_status": "L",
+  "listing_date": "19910403",
+  "delisting_date": null
 }
 ```
 
-Required: `ts_code`, `name`.
+Required: `symbol`, `name`.
 
-Optional: `symbol`, `exchange`, `market`, `industry`, `area`, `list_status`, `list_date`, `delist_date`.
+Optional: `symbol`, `exchange`, `market`, `industry`, `area`, `listing_status`, `listing_date`, `delisting_date`.
 
 Missing behavior: render unavailable metadata as `--` and explain material omissions in `SourceDisclosure.notes`.
 
 ## PricePoint
 
-Use for daily price series from `daily`. Add derived fields only after calculating them from returned rows.
+Use for daily price series from `prices`. Add derived fields only after calculating them from returned rows.
 
 ```json
 {
-  "ts_code": "000001.SZ",
-  "trade_date": "20260511",
+  "symbol": "000001.SZ",
+  "date": "20260511",
   "open": 11.2,
   "high": 11.58,
   "low": 11.06,
   "close": 11.42,
-  "pre_close": 11.18,
-  "pct_chg": 2.15,
-  "vol": 874512.34,
+  "previous_close": 11.18,
+  "percent_change": 2.15,
+  "volume": 874512.34,
   "amount": 998231.12,
   "ma5": 11.18,
   "ma20": null
 }
 ```
 
-Required: `ts_code`, `trade_date`, `close`.
+Required: `symbol`, `date`, `close`.
 
-Optional: `open`, `high`, `low`, `pre_close`, `pct_chg`, `vol`, `amount`, calculated indicator fields such as `ma5`, `ma20`, `dif`, `dea`, `macd`.
+Optional: `open`, `high`, `low`, `previous_close`, `percent_change`, `volume`, `amount`, calculated indicator fields such as `ma5`, `ma20`, `dif`, `dea`, `macd`.
 
-Units: `vol` follows the upstream dataset unit, `amount` follows the upstream dataset unit, `pct_chg` is percentage points.
+Units: `volume` follows the upstream dataset unit, `amount` follows the upstream dataset unit, `percent_change` is percentage points.
 
 ## CandlePoint
 
-Use for daily candlestick charts from `daily`. Sort ascending by `trade_date` and convert `trade_date` to ISO `time` before passing rows to `lightweight-charts`.
+Use for daily candlestick charts from `prices`. Sort ascending by `date` and convert `date` to ISO `time` before passing rows to `lightweight-charts`.
 
 ```json
 {
-  "ts_code": "601318.SH",
-  "trade_date": "20260515",
+  "symbol": "601318.SH",
+  "date": "20260515",
   "time": "2026-05-15",
   "open": 51.2,
   "high": 52.8,
   "low": 50.9,
   "close": 52.2,
-  "pre_close": 50.82,
-  "pct_chg": 2.71,
-  "vol": 874512.34,
+  "previous_close": 50.82,
+  "percent_change": 2.71,
+  "volume": 874512.34,
   "amount": 998231.12
 }
 ```
 
-Required: `ts_code`, `trade_date`, `time`, `open`, `high`, `low`, `close`.
+Required: `symbol`, `date`, `time`, `open`, `high`, `low`, `close`.
 
-Optional: `pre_close`, `pct_chg`, `vol`, `amount`.
+Optional: `previous_close`, `percent_change`, `volume`, `amount`.
 
 Missing behavior: if any required OHLC field is missing or non-numeric, omit that candle and disclose the omitted row count in `SourceDisclosure.notes`.
 
@@ -132,13 +132,13 @@ Use a per-date merged object for hover details. The key should match the chart `
 ```json
 {
   "time": "2026-05-15",
-  "trade_date": "20260515",
+  "date": "20260515",
   "open": 51.2,
   "high": 52.8,
   "low": 50.9,
   "close": 52.2,
-  "pct_chg": 2.71,
-  "vol": 874512.34,
+  "percent_change": 2.71,
+  "volume": 874512.34,
   "amount": 998231.12,
   "turnover_rate": 0.81,
   "pe_ttm": 8.91,
@@ -154,7 +154,7 @@ Use a per-date merged object for hover details. The key should match the chart `
 
 Required for candlestick tooltip: `time`, `open`, `high`, `low`, `close`.
 
-Optional: `trade_date`, `pct_chg`, `vol`, `amount`, daily-basic metrics, and indicator values.
+Optional: `date`, `percent_change`, `volume`, `amount`, daily-metrics metrics, and indicator values.
 
 Missing behavior: show `--` for optional missing values and keep the tooltip visible if required OHLC values exist.
 
@@ -164,17 +164,17 @@ Use for time-series valuation, turnover, market value, or volume metrics.
 
 ```json
 {
-  "ts_code": "000001.SZ",
-  "trade_date": "20260511",
+  "symbol": "000001.SZ",
+  "date": "20260511",
   "metric": "pe_ttm",
   "label": "PE TTM",
   "value": 5.82,
   "unit": "x",
-  "source_dataset": "daily-basic"
+  "source_dataset": "daily-metrics"
 }
 ```
 
-Required: `ts_code`, `trade_date`, `metric`, `label`, `value`, `source_dataset`.
+Required: `symbol`, `date`, `metric`, `label`, `value`, `source_dataset`.
 
 Optional: `unit`.
 
@@ -186,18 +186,18 @@ Use for latest-value cards, comparison matrices, and sortable tables.
 
 ```json
 {
-  "ts_code": "000001.SZ",
-  "trade_date": "20260515",
+  "symbol": "000001.SZ",
+  "date": "20260515",
   "metrics": {
     "close": { "label": "Close", "value": 11.73, "unit": "CNY", "source_dataset": "daily" },
-    "pe_ttm": { "label": "PE TTM", "value": 5.94, "unit": "x", "source_dataset": "daily-basic" },
-    "pb": { "label": "PB", "value": 0.62, "unit": "x", "source_dataset": "daily-basic" },
-    "total_mv": { "label": "Total market value", "value": 227680000000, "unit": "CNY", "source_dataset": "daily-basic" }
+    "pe_ttm": { "label": "PE TTM", "value": 5.94, "unit": "x", "source_dataset": "daily-metrics" },
+    "pb": { "label": "PB", "value": 0.62, "unit": "x", "source_dataset": "daily-metrics" },
+    "total_market_value": { "label": "Total market value", "value": 227680000000, "unit": "CNY", "source_dataset": "daily-metrics" }
   }
 }
 ```
 
-Required: `ts_code`, `trade_date`, `metrics`.
+Required: `symbol`, `date`, `metrics`.
 
 Each metric requires `label`, `value`, and `source_dataset`. `unit` is optional only when the label is self-evident.
 
@@ -207,30 +207,30 @@ Use for comparison matrices and sortable tables.
 
 ```json
 {
-  "ts_code": "000001.SZ",
+  "symbol": "000001.SZ",
   "name": "Example Bank",
   "industry": "银行",
-  "trade_date": "20260515",
+  "date": "20260515",
   "values": {
     "close": 11.73,
     "pe_ttm": 5.94,
     "pb": 0.62,
-    "total_mv": 227680000000,
+    "total_market_value": 227680000000,
     "turnover_rate": 0.81
   },
   "units": {
     "close": "CNY",
     "pe_ttm": "x",
     "pb": "x",
-    "total_mv": "CNY",
+    "total_market_value": "CNY",
     "turnover_rate": "%"
   }
 }
 ```
 
-Required: `ts_code`, `name`, `values`.
+Required: `symbol`, `name`, `values`.
 
-Optional: `industry`, `trade_date`, `units`.
+Optional: `industry`, `date`, `units`.
 
 Missing behavior: render missing values as `--`; do not sort missing numeric values ahead of real values.
 
@@ -244,14 +244,14 @@ Required for every generated page.
   "data_sources": [
     {
       "dataset": "daily",
-      "fields": ["ts_code", "trade_date", "close", "vol"],
-      "filters": { "ts_code": "000001.SZ", "start": "20260511", "end": "20260515" },
+      "fields": ["symbol", "date", "close", "volume"],
+      "filters": { "symbol": "000001.SZ", "start": "20260511", "end": "20260515" },
       "row_count": 5
     },
     {
-      "dataset": "daily-basic",
-      "fields": ["ts_code", "trade_date", "pe_ttm", "pb", "total_mv"],
-      "filters": { "ts_code": "000001.SZ", "start": "20260511", "end": "20260515" },
+      "dataset": "daily-metrics",
+      "fields": ["symbol", "date", "pe_ttm", "pb", "total_market_value"],
+      "filters": { "symbol": "000001.SZ", "start": "20260511", "end": "20260515" },
       "row_count": 5
     }
   ],
@@ -268,7 +268,7 @@ Calculation source: use `references/annual-report-calculations.md` for every fie
 
 ```json
 {
-  "profile": { "ts_code": "601318.SH", "name": "中国平安", "industry": "保险" },
+  "profile": { "symbol": "601318.SH", "name": "中国平安", "industry": "保险" },
   "period": {
     "start": "20250519",
     "end": "20260518",
@@ -285,8 +285,8 @@ Calculation source: use `references/annual-report-calculations.md` for every fie
     "benchmark_return_pct": 4.1,
     "excess_return_pct": 8.3,
     "max_drawdown_pct": -18.6,
-    "high": { "trade_date": "20260210", "value": 58.4 },
-    "low": { "trade_date": "20250821", "value": 41.2 },
+    "high": { "date": "20260210", "value": 58.4 },
+    "low": { "date": "20250821", "value": 41.2 },
     "avg_amount": 128.4,
     "volatility_pct": 22.8
   },
@@ -298,19 +298,19 @@ Calculation source: use `references/annual-report-calculations.md` for every fie
     "peak_date": "20260210",
     "trough_date": "20260318",
     "recovery_date": null,
-    "points": [{ "trade_date": "20260518", "value": -4.2 }]
+    "points": [{ "date": "20260518", "value": -4.2 }]
   },
   "valuation": {
     "pe_ttm": { "current": 8.9, "min": 7.2, "max": 10.8, "percentile": 61 },
     "pb": { "current": 0.96, "min": 0.78, "max": 1.12, "percentile": 54 },
-    "points": [{ "trade_date": "20260518", "pe_ttm": 8.9, "pb": 0.96 }]
+    "points": [{ "date": "20260518", "pe_ttm": 8.9, "pb": 0.96 }]
   },
   "benchmark": {
     "name": "沪深300",
-    "points": [{ "trade_date": "20260518", "stock_index": 112.4, "benchmark_index": 104.1 }]
+    "points": [{ "date": "20260518", "stock_index": 112.4, "benchmark_index": 104.1 }]
   },
   "events": [
-    { "trade_date": "20260320", "kind": "earnings", "title": "Annual report released", "summary": "Revenue and profit fields should cite returned filings data when available." }
+    { "date": "20260320", "kind": "earnings", "title": "Annual report released", "summary": "Revenue and profit fields should cite returned filings data when available." }
   ],
   "technical_state": [
     { "label": "MA20/60/120", "state": "neutral", "value": "MA20 above MA60, below MA120", "evidence": "Calculated from returned daily rows." }

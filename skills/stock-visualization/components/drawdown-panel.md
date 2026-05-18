@@ -13,12 +13,12 @@ Show the largest peak-to-trough loss inside the selected period and provide the 
     "peak_date": "20260210",
     "trough_date": "20260318",
     "recovery_date": null,
-    "points": [{ "trade_date": "20260518", "value": -4.2 }]
+    "points": [{ "date": "20260518", "value": -4.2 }]
   }
 }
 ```
 
-Required: `max_drawdown_pct`, `points[].trade_date`, `points[].value`.
+Required: `max_drawdown_pct`, `points[].date`, `points[].value`.
 
 Optional: `peak_date`, `trough_date`, `recovery_date`.
 

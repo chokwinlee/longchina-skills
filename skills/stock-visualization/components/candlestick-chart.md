@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Render the default stock price view for A-share OHLC data: candlesticks on the main pane, moving-average overlays, volume, MACD, optional KDJ/RSI panes, and a hover tooltip. Use this component whenever `daily` rows include `open`, `high`, `low`, and `close`.
+Render the default stock price view for A-share OHLC data: candlesticks on the main pane, moving-average overlays, volume, MACD, optional KDJ/RSI panes, and a hover tooltip. Use this component whenever `prices` rows include `open`, `high`, `low`, and `close`.
 
 Read `references/chart-engine.md`, `references/data-contracts.md`, and `references/indicator-rules.md` before generating the final HTML. Do not replace this component with `price-trend.md` unless OHLC rows are unavailable.
 
@@ -10,7 +10,7 @@ Read `references/chart-engine.md`, `references/data-contracts.md`, and `referenc
 
 ```json
 {
-  "profile": { "ts_code": "601318.SH", "name": "中国平安" },
+  "profile": { "symbol": "601318.SH", "name": "中国平安" },
   "summary": {
     "date_range": "2026-04-01 to 2026-05-15",
     "latest_close": 52.2,
@@ -20,14 +20,14 @@ Read `references/chart-engine.md`, `references/data-contracts.md`, and `referenc
   "candles": [
     {
       "time": "2026-05-15",
-      "trade_date": "20260515",
+      "date": "20260515",
       "open": 51.2,
       "high": 52.8,
       "low": 50.9,
       "close": 52.2,
-      "pre_close": 50.82,
-      "pct_chg": 2.71,
-      "vol": 874512.34,
+      "previous_close": 50.82,
+      "percent_change": 2.71,
+      "volume": 874512.34,
       "amount": 998231.12
     }
   ],
@@ -53,13 +53,13 @@ Read `references/chart-engine.md`, `references/data-contracts.md`, and `referenc
   "tooltip": {
     "2026-05-15": {
       "time": "2026-05-15",
-      "trade_date": "20260515",
+      "date": "20260515",
       "open": 51.2,
       "high": 52.8,
       "low": 50.9,
       "close": 52.2,
-      "pct_chg": 2.71,
-      "vol": 874512.34,
+      "percent_change": 2.71,
+      "volume": 874512.34,
       "amount": 998231.12,
       "pe_ttm": 8.91,
       "pb": 0.96
@@ -68,9 +68,9 @@ Read `references/chart-engine.md`, `references/data-contracts.md`, and `referenc
 }
 ```
 
-Required: `profile.ts_code`, `profile.name`, `candles[].time`, `candles[].open`, `candles[].high`, `candles[].low`, `candles[].close`.
+Required: `profile.symbol`, `profile.name`, `candles[].time`, `candles[].open`, `candles[].high`, `candles[].low`, `candles[].close`.
 
-Optional: `summary`, `overlays`, `panes`, `tooltip`, daily-basic metrics, missing-data notes.
+Optional: `summary`, `overlays`, `panes`, `tooltip`, daily-metrics metrics, missing-data notes.
 
 ## Configuration
 
