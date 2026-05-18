@@ -7,10 +7,12 @@ It intentionally does not contain the private product monorepo, backend source, 
 ## Install the agent skill
 
 ```bash
-npx -y skills add chokwinlee/longchina-skills --skill longchina-data -a codex -y
+npx -y skills add https://longchina.vercel.app --skill longchina-data -a codex -y
 ```
 
 Use `-a claude-code` or `-a cursor` for those agents.
+
+The website is the public install source because it exposes the well-known skill registry. This repository remains the public mirror for source review and CLI release assets.
 
 ## CLI requirement
 
