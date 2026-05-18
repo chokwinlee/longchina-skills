@@ -1,6 +1,6 @@
 ---
 name: longchina-data
-version: 0.1.1
+version: 0.1.2
 description: Use when a user needs authoritative P0 A-share market, daily indicator, adjustment factor, stock master, or trading calendar data through the longchina CLI/API. The skill must fetch real data via `longchina` and must not invent investment data.
 ---
 
@@ -21,7 +21,7 @@ If the skills CLI is unavailable, use the manual skill install fallback in `/ins
 Before data work, verify the current runtime:
 
 ```bash
-longchina status --json --skill-version 0.1.1
+longchina status --json --skill-version 0.1.2
 ```
 
 `status` performs the periodic CLI/skill version policy check. If the JSON response contains `version.cli.update_required: true` or `version.skill.update_required: true`, reinstall the CLI and this skill before continuing. Minor-version updates may be reported as available but are not blocking.
@@ -33,13 +33,13 @@ If the environment provides an API key, token login is optional:
 ```sh
 if [ -n "${LONGCHINA_API_KEY:-}" ]; then
   echo "$LONGCHINA_API_KEY" | longchina login --with-token --json
-  longchina status --json --skill-version 0.1.1
+  longchina status --json --skill-version 0.1.2
 fi
 ```
 
 ## Required workflow
 
-1. Run `longchina status --json --skill-version 0.1.1` before data work, and obey any required update in the returned `version` block before querying.
+1. Run `longchina status --json --skill-version 0.1.2` before data work, and obey any required update in the returned `version` block before querying.
 2. Inspect available datasets with `longchina datasets --json` when the requested dataset or field is unclear.
 3. Fetch data with `longchina query ...`; prefer narrow `--fields`, explicit `--ts-code`, and bounded `--start`/`--end`.
 4. Prefer `--format json` for machine parsing and `--format csv` for user-facing tables.
