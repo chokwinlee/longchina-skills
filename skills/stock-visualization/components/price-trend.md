@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Render a compact price trend chart for one security. Use it for close price, interval return, and optional moving-average lines calculated by the agent.
+Render a compact fallback price trend chart for close-only or indexed series. For OHLC stock price visualization, use `candlestick-chart.md`; do not use this component as the primary stock chart when `open`, `high`, `low`, and `close` are available.
 
 Before writing SVG `points`, use `references/rendering-helpers.md` to convert the actual returned `series` into chart coordinates. The snippet below is structural; do not reuse its example coordinates for live data.
 

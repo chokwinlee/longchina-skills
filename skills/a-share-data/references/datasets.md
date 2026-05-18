@@ -67,3 +67,51 @@ Common fields: `ts_code`, `trade_date`, `adj_factor`
 Filters: `ts_code`, `start`, `end`
 
 Use when the task needs raw adjustment factors.
+
+## financial statements and indicators
+
+CLI datasets:
+
+- `income`
+- `balancesheet`
+- `cashflow`
+- `fina-indicator`
+- `forecast`
+- `express`
+- `dividend`
+- `fina-audit`
+- `fina-mainbz`
+- `disclosure-date`
+
+Common filters: `ts_code`, `start`, `end`. Some datasets also support exact filters such as `ann_date`, `end_date`, `period`, `type`, `record_date`, or `ex_date`.
+
+Use these datasets for fundamental research reports: revenue and profit trends, balance sheet risk, cash flow quality, financial ratios, dividend history, audit result, business segment breakdown, performance forecasts, performance express reports, and disclosure schedule checks.
+
+## review signals
+
+CLI datasets:
+
+- `moneyflow`
+- `margin`
+- `margin-detail`
+- `stk-limit`
+- `top-list`
+- `top-inst`
+- `block-trade`
+- `repurchase`
+- `hk-hold`
+
+Use these datasets for one-off stock-pool review reports, anomaly checks, market behavior context, financing/margin review, limit-price context, block-trade review, buyback review, and Northbound holding context. Prefer bounded date filters.
+
+## shareholder and governance
+
+CLI datasets:
+
+- `top10-holders`
+- `top10-floatholders`
+- `stk-holdernumber`
+- `stk-holdertrade`
+- `pledge-stat`
+- `pledge-detail`
+
+Use these datasets for shareholder concentration, holder count changes, major holder trades, and pledge-risk context. Treat missing rows as no returned records for the requested filters, not as proof that the event never happened outside the queried range.

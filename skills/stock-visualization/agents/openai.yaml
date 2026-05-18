@@ -1,0 +1,8 @@
+interface:
+  display_name: "Stock Visualization"
+  short_description: "Create A-share stock charts and offline HTML visual reports"
+  brand_color: "#2563EB"
+  default_prompt: "Use $stock-visualization when the task is to turn longchina A-share data into visual reports, interactive stock charts, comparison views, sortable tables, or offline HTML artifacts."
+
+policy:
+  allow_implicit_invocation: true

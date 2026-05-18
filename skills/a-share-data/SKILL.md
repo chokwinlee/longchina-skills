@@ -45,8 +45,9 @@ fi
 4. Prefer `--format json` for machine parsing and `--format csv` for user-facing tables.
 5. Use the CLI option `--order-by` for sorting when needed; do not use the API field name `order_by` as a command-line option.
 6. Report the returned data and include dataset name, filters, date range, fields, and cache/usage metadata when available.
-7. Do not fabricate prices, financial values, trading dates, returned rows, ratings, or usage numbers. If the CLI/API returns no rows, say that no rows were returned for the filters.
-8. Do not ask users to manually sync server data. If a query returns no rows or partial rows, report the exact filters, row counts, and available metadata instead of inventing or implying unavailable data.
+7. If the user asks for 可视化, 图表, 走势, chart, plot, graph, comparison report, trend report, or metric table output, fetch the authoritative data first and then use `stock-visualization` for rendering.
+8. Do not fabricate prices, financial values, trading dates, returned rows, ratings, or usage numbers. If the CLI/API returns no rows, say that no rows were returned for the filters.
+9. Do not ask users to manually sync server data. If a query returns no rows or partial rows, report the exact filters, row counts, and available metadata instead of inventing or implying unavailable data.
 
 ## Agent command contract
 
@@ -55,6 +56,9 @@ fi
 - Use `longchina query stock-basic` for names, exchange, lifecycle dates, and universe construction.
 - Use `longchina query trade-cal` before assuming a natural date was an open trading day.
 - Use `longchina query adj-factor` when the task needs raw adjustment factors.
+- Use `longchina query income`, `balancesheet`, `cashflow`, `fina-indicator`, `forecast`, `express`, `dividend`, `fina-audit`, `fina-mainbz`, and `disclosure-date` for fundamental research data.
+- Use `longchina query moneyflow`, `margin`, `margin-detail`, `stk-limit`, `top-list`, `top-inst`, `block-trade`, `repurchase`, and `hk-hold` for stock-pool review signals.
+- Use `longchina query top10-holders`, `top10-floatholders`, `stk-holdernumber`, `stk-holdertrade`, `pledge-stat`, and `pledge-detail` for shareholder and pledge-risk context.
 - Treat every CLI result as authoritative only for the requested filters and returned rows.
 
 ## Dataset references

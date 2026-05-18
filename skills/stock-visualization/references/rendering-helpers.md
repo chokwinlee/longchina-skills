@@ -2,6 +2,8 @@
 
 Use these rules when turning normalized contracts into HTML. Component snippets show structure and styling; replace example values, table rows, and SVG points with values derived from returned data.
 
+For OHLC stock price charts, use `references/chart-engine.md` and `components/candlestick-chart.md` first. The SVG coordinate helpers below are fallback guidance for static line charts, indexed comparisons, or non-OHLC metric series.
+
 ## Row Preparation
 
 Group time-series rows by `ts_code`, then sort each group by ascending `trade_date`. Use the latest sorted row for cards, metric snapshots, comparison matrices, and default table rows.
@@ -15,7 +17,7 @@ When joining datasets:
 
 ## SVG Line Coordinates
 
-For a single line chart:
+For a single fallback line chart:
 
 1. Choose a fixed `viewBox`, for example `0 0 640 240`.
 2. Reserve margins, for example left `48`, right `36`, top `28`, bottom `44`.
