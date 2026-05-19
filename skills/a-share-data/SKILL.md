@@ -1,6 +1,6 @@
 ---
 name: longchina-data
-version: 0.1.2
+version: 0.1.3
 description: Use when a user needs authoritative P0 A-share prices, daily metrics, security metadata, adjustments, or trading calendar data through the longchina CLI/API.
 ---
 
@@ -13,7 +13,7 @@ Use the longchina CLI as the source of truth for A-share structured data.
 Before data work, verify the current runtime:
 
 ```bash
-longchina status --json --skill-version 0.1.2
+longchina status --json --skill-version 0.1.3
 ```
 
 If `longchina` is unavailable, stop and tell the user that the longchina CLI is required before data work. This skill does not install software, modify shell profile files, write skill files, or perform authentication setup.
@@ -24,7 +24,7 @@ The CLI defaults to `https://longchina.vercel.app/api`. For local development or
 
 ## Required workflow
 
-1. Run `longchina status --json --skill-version 0.1.2` before data work, and obey any required update in the returned `version` block before querying.
+1. Run `longchina status --json --skill-version 0.1.3` before data work, and obey any required update in the returned `version` block before querying.
 2. Inspect available datasets with `longchina datasets --json` when the requested dataset or field is unclear.
 3. Fetch data with `longchina query ...`; prefer narrow `--fields`, explicit `--symbol`, and bounded `--start`/`--end`.
 4. Prefer `--format json` for machine parsing and `--format csv` for user-facing tables.
