@@ -11,7 +11,7 @@ Render provenance, missing-data, generation, and risk information. Every generat
   "generated_at": "2026-05-16T16:30:00+08:00",
   "data_sources": [
     {
-      "dataset": "daily",
+      "dataset": "prices",
       "fields": ["symbol", "date", "close", "volume"],
       "filters": { "symbol": "000001.SZ", "start": "20260511", "end": "20260515" },
       "row_count": 5
@@ -47,7 +47,7 @@ Optional: `notes`, `usage`.
   <h2>Data source and risk notes</h2>
   <dl>
     <dt>Generated</dt><dd>2026-05-16T16:30:00+08:00</dd>
-    <dt>Sources</dt><dd><code>securities</code>, <code>daily</code>, <code>daily-metrics</code></dd>
+    <dt>Sources</dt><dd><code>securities</code>, <code>prices</code>, <code>daily-metrics</code></dd>
     <dt>Filters</dt><dd><code>000001.SZ</code> and <code>600000.SH</code>, 20260511 to 20260515</dd>
     <dt>Notes</dt><dd>Example output uses illustrative values. Missing values are shown as <code>--</code>.</dd>
     <dt>Risk</dt><dd>This visualization is not investment advice. Verify returned rows, dates, and assumptions before making decisions.</dd>

@@ -1,7 +1,6 @@
 {
   "profile": {
     "symbol": "601318.SH",
-    "symbol": "601318",
     "name": "中国平安",
     "exchange": "SSE",
     "market": "Main Board",
@@ -20000,7 +19999,7 @@
       "label": "MA20/60/120",
       "state": "positive",
       "value": "MA20 69.87 / MA60 62.08 / MA120 59.99",
-      "evidence": "Calculated from returned daily close rows."
+      "evidence": "Calculated from returned prices close rows."
     },
     {
       "label": "MACD",
@@ -20018,7 +20017,7 @@
       "label": "Volume",
       "state": "neutral",
       "value": "Latest volume 97 万手",
-      "evidence": "Volume unit follows the upstream daily dataset."
+      "evidence": "Volume unit follows the returned prices rows."
     }
   ],
   "agent_brief": {
@@ -20040,7 +20039,6 @@
         "dataset": "securities",
         "fields": [
           "symbol",
-          "symbol",
           "name",
           "exchange",
           "market",
@@ -20052,7 +20050,7 @@
         "row_count": 1
       },
       {
-        "dataset": "daily",
+        "dataset": "prices",
         "fields": [
           "symbol",
           "date",

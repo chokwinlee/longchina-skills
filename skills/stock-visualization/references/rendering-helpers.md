@@ -35,6 +35,35 @@ If `min_value` equals `max_value`, pad the range by a small value such as `abs(v
 
 For sparse series, omit null points. If null values split an otherwise valid line, render separate `<polyline>` elements for each contiguous segment instead of connecting across missing data.
 
+## Edge-Safe Labels
+
+Use these rules for bubble, scatter, heatmap, benchmark, metric, and any chart with point labels near a plot boundary. The common failure mode is drawing the point at the domain maximum and then placing the marker radius or text outside the right side of the SVG or canvas.
+
+Before computing chart coordinates, reserve plot margins for both geometry and labels:
+
+```text
+axis_padding = 12
+max_bubble_radius = maximum visible marker radius, or 0 for line-only charts
+max_label_width = longest visible label width in pixels
+label_gap = 8
+right = axis_padding + max_bubble_radius + max_label_width + label_gap
+left = max(left_axis_width, y_label_width) + axis_padding
+plot_width = view_width - left - right
+```
+
+For every visible point label:
+
+1. Place the label to the right of the marker by default.
+2. If `label_x + label_width` would exceed `view_width - axis_padding`, flip the label to the marker's left side.
+3. After choosing a side, clamp the label inside the chart surface:
+
+```text
+label_x = clamp(label_x, axis_padding, view_width - axis_padding - label_width)
+label_y = clamp(label_y, top + label_height, view_height - bottom)
+```
+
+If several labels collide on the right edge, keep the most important labels visible and move the rest into a legend, tooltip, or adjacent data table. Do not rely on `overflow: visible` alone to rescue clipped labels; reserve space in the viewBox and the chart frame.
+
 ## Multi-Series Charts
 
 When comparing securities with different price scales, either:

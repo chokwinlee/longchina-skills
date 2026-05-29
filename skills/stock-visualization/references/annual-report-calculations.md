@@ -144,6 +144,7 @@ Technical state is a factual classification, not a trading recommendation.
 - KDJ is `high` when `K`, `D`, or `J` is above `80`, `low` when below `20`, and `neutral` otherwise.
 - BOLL position is `above_upper`, `below_lower`, `inside_band`, or `unavailable`.
 - RSI is `high` above `70`, `low` below `30`, and `neutral` otherwise.
+- Support/resistance levels come from `references/indicator-rules.md`: nearest support is the closest valid swing-low cluster below latest close, and nearest resistance is the closest valid swing-high cluster above latest close.
 
 Do not map these states to buy, sell, hold, overweight, or underweight language unless the user explicitly asks for an investment opinion.
 
@@ -170,4 +171,5 @@ Before rendering `AnnualPerformanceReport`, verify:
 - `drawdown` includes peak, trough, recovery date, and drawdown points.
 - `valuation` includes current, min, max, percentile, and valuation points when `daily-metrics` data exists.
 - `technical_state` cites the calculated evidence for each state.
+- `technical_levels` cites returned-row evidence for support/resistance or states why levels are unavailable.
 - `source_disclosure` states datasets, row counts, period boundaries, units, benchmark source, missing values, and risk note.

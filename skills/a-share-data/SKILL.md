@@ -30,7 +30,7 @@ The CLI defaults to `https://longchina.vercel.app/api`. For local development or
 4. Prefer `--format json` for machine parsing and `--format csv` for user-facing tables.
 5. Use the CLI option `--order-by` for sorting when needed; do not use the API field name `order_by` as a command-line option.
 6. Report the returned data and include dataset name, filters, date range, fields, and cache/usage metadata when available.
-7. If the user asks for 可视化, 图表, 走势, chart, plot, graph, comparison report, trend report, or metric table output, fetch the authoritative data first and then use `stock-visualization` for rendering.
+7. If the user asks for a broad stock review, stock analysis, comparison framing, report, table, or investment-context workflow and the desired output is unclear, use `stock-research-intake` before deciding which data to fetch or whether visualization is needed. If the user explicitly asks for visual output such as 可视化, 图表, 走势图, chart, plot, graph, K-line, candlestick, visual comparison, or HTML report, fetch authoritative data first and then use `stock-visualization` for rendering.
 8. Do not fabricate prices, financial values, trading dates, returned rows, ratings, or usage numbers. If the CLI/API returns no rows, say that no rows were returned for the filters.
 9. Do not ask users to manually sync server data. If a query returns no rows or partial rows, report the exact filters, row counts, and available metadata instead of inventing or implying unavailable data.
 

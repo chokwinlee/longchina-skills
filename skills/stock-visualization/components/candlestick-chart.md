@@ -81,6 +81,10 @@ Optional: `summary`, `overlays`, `panes`, `tooltip`, daily-metrics metrics, miss
 - `default_panes`: `["volume", "macd"]`; add `kdj` when at least 9 valid rows exist.
 - `indicator_controls`: render visible checkbox controls for every optional overlay and pane.
 - `price_scale`: right side.
+- `min_visible_bars`: minimum visible bars for zoom; default 20.
+- `max_visible_bars`: maximum visible bars for zoom; default 160 or the available row count when smaller.
+- `time_scale_sync`: required logical range synchronization across every stacked pane.
+- `crosshair_sync`: required crosshair synchronization across every stacked pane with `setCrosshairPosition`.
 - `empty_label`: `No OHLC rows returned for this interval.`
 
 ## HTML Snippet
@@ -128,6 +132,14 @@ Indicator controls must change the chart state, not just the visual chip state:
 - `data-volume-pane` controls the volume pane visibility and histogram data.
 - When unchecked, clear the corresponding series with `series.setData([])` or hide the pane and preserve the original data for re-check.
 - Keep the checkbox visible and keyboard reachable; do not rely on color-only legend text.
+
+Pane synchronization is part of the component contract:
+
+- Use logical range synchronization, not time-range-only synchronization, for all stacked panes.
+- Enforce minimum visible bars so users cannot zoom into an unreadably small fragment.
+- Enforce maximum visible bars so users cannot over-compress the full history into a single narrow strip.
+- Keep crosshair synchronization enabled across main, volume, MACD, KDJ, and RSI panes.
+- Use pane-local values with `setCrosshairPosition` so the y-axis marker appears in each pane for the same timestamp.
 
 ## Missing Data Behavior
 

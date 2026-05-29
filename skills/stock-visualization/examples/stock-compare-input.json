@@ -15,7 +15,7 @@
       "snapshot": {
         "date": "20260515",
         "metrics": {
-          "close": { "label": "Close", "value": 11.73, "unit": "CNY", "source_dataset": "daily" },
+          "close": { "label": "Close", "value": 11.73, "unit": "CNY", "source_dataset": "prices" },
           "pe_ttm": { "label": "PE TTM", "value": 5.94, "unit": "x", "source_dataset": "daily-metrics" },
           "pb": { "label": "PB", "value": 0.62, "unit": "x", "source_dataset": "daily-metrics" },
           "total_market_value": { "label": "Market value", "value": 227680000000, "unit": "CNY", "source_dataset": "daily-metrics" },
@@ -43,7 +43,7 @@
       "snapshot": {
         "date": "20260515",
         "metrics": {
-          "close": { "label": "Close", "value": 8.42, "unit": "CNY", "source_dataset": "daily" },
+          "close": { "label": "Close", "value": 8.42, "unit": "CNY", "source_dataset": "prices" },
           "pe_ttm": { "label": "PE TTM", "value": 6.38, "unit": "x", "source_dataset": "daily-metrics" },
           "pb": { "label": "PB", "value": 0.54, "unit": "x", "source_dataset": "daily-metrics" },
           "total_market_value": { "label": "Market value", "value": 154200000000, "unit": "CNY", "source_dataset": "daily-metrics" },
@@ -69,7 +69,7 @@
         "row_count": 2
       },
       {
-        "dataset": "daily",
+        "dataset": "prices",
         "fields": ["symbol", "date", "close"],
         "filters": { "symbol": ["000001.SZ", "600000.SH"], "start": "20260511", "end": "20260515" },
         "row_count": 10

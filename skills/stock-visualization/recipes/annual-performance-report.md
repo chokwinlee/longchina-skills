@@ -30,6 +30,7 @@ Fill:
 - `CandlePoint`.
 - `OverlaySeries` for MA5, MA10, MA20, MA60, and MA120.
 - `IndicatorPaneSeries` for volume and optional MACD/KDJ.
+- `TechnicalLevelSet` for support/resistance levels when enough OHLC rows exist.
 - `TooltipSnapshot`.
 - `SourceDisclosure`.
 
@@ -43,22 +44,25 @@ Fill:
 - Calculate volatility from close-to-close daily returns and annualize with `sqrt(252)`.
 - Calculate valuation current/min/max/percentile from valid `daily-metrics` values inside the report period.
 - Keep technical state factual. Do not turn MA, MACD, KDJ, BOLL, or RSI states into buy/sell/hold advice.
+- Derive support/resistance from returned swing-high and swing-low clusters only; do not infer target prices from levels.
 - Do not perform unit conversion for amount, volume, market value, or valuation fields unless the source unit is known and stated in the footnote.
 
 ## Components
 
 Compose:
 
-1. `performance-summary-strip.md`.
-2. `candlestick-chart.md` with one-year candles, volume, and moving averages.
-3. `return-window-table.md`.
-4. `drawdown-panel.md`.
-5. `valuation-band-chart.md`.
-6. `benchmark-comparison.md` when benchmark data exists.
-7. `event-timeline.md` when event data exists.
-8. `technical-state-table.md`.
-9. `agent-brief.md`.
-10. `source-footnote.md`.
+1. `chart-frame.md` around every chart-like section that can be inspected fullscreen.
+2. `performance-summary-strip.md`.
+3. `candlestick-chart.md` with one-year candles, volume, and moving averages.
+4. `return-window-table.md`.
+5. `drawdown-panel.md`.
+6. `valuation-band-chart.md`.
+7. `benchmark-comparison.md` when benchmark data exists.
+8. `event-timeline.md` when event data exists.
+9. `technical-state-table.md`.
+10. `technical-levels-panel.md` when support/resistance evidence exists or was requested.
+11. `agent-brief.md`.
+12. `source-footnote.md`.
 
 ## Layout
 
@@ -77,7 +81,7 @@ Recommended page order:
 
 1. Header: company, symbol, one-year period, generated timestamp.
 2. Summary strip: latest price, return, benchmark, excess, max drawdown, yearly range.
-3. Main analysis band: candlestick chart on the left, yearly facts and technical state on the right.
+3. Main analysis band: candlestick chart on the left, yearly facts, technical state, and support/resistance levels on the right.
 4. Return windows and benchmark comparison.
 5. Drawdown and valuation context.
 6. Event timeline.
@@ -90,6 +94,7 @@ Recommended page order:
 - If `daily-metrics` is missing, omit valuation context.
 - If event datasets are missing, show a note that no events were supplied.
 - If fewer than 120 trading rows are available, omit MA120 and disclose warmup limitations.
+- If support/resistance cannot be derived from enough swing points, show the technical-levels block as unavailable or omit it with a source note.
 - Never turn technical state into buy, sell, or hold advice.
 
 ## Required Footnote Details

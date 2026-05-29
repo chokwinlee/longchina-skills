@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Summarize derived technical states without turning them into recommendations: moving-average alignment, MACD cross state, KDJ zone, RSI zone, BOLL position, and volume behavior.
+Summarize derived technical states without turning them into recommendations: moving-average alignment, MACD cross state, KDJ zone, RSI zone, BOLL position, volume behavior, and whether support/resistance evidence is available. Use `technical-levels-panel.md` for the actual nearest support and nearest resistance values.
 
 ## Input Schema
 

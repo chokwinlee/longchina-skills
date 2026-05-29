@@ -30,10 +30,11 @@ Fill:
 
 Compose:
 
-1. `sortable-table.md`.
-2. Plain text metric definitions when needed.
-3. Plain text scope note for stock pool, industry, row limit, or date.
-4. `source-footnote.md`.
+1. `chart-frame.md` when the table is visual, dense, or benefits from fullscreen inspection.
+2. `sortable-table.md`.
+3. Plain text metric definitions when needed.
+4. Plain text scope note for stock pool, industry, row limit, or date.
+5. `source-footnote.md`.
 
 ## Missing Data Behavior
 

@@ -1,7 +1,6 @@
 {
   "profile": {
     "symbol": "000001.SZ",
-    "symbol": "000001",
     "name": "Example A-Share",
     "exchange": "SZSE",
     "market": "Main Board",
@@ -2874,7 +2873,7 @@
     "generated_at": "2026-05-18T12:00:00+08:00",
     "data_sources": [
       {
-        "dataset": "daily",
+        "dataset": "prices",
         "fields": [
           "symbol",
           "date",

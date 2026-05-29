@@ -1,0 +1,8 @@
+interface:
+  display_name: "Stock Research Intake"
+  short_description: "Plan stock, sector research, and preferences"
+  brand_color: "#2563EB"
+  default_prompt: "Use $stock-research-intake when the user asks broad A-share stock or industry/sector research, fundamental/value/technical analysis, frameworks, how to analyze a stock or sector, or when analysis angle, output format, or visualization need is unclear."
+
+policy:
+  allow_implicit_invocation: true

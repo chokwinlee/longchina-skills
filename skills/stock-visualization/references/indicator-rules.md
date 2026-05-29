@@ -121,6 +121,47 @@ lower = mid - 2 * std
 
 Render BOLL as three main-pane `OverlaySeries` lines. Use `null` until 20 valid close values exist.
 
+## Support And Resistance Levels
+
+Support and resistance levels are derived from returned daily OHLC rows. They are factual chart structure, not a forecast.
+
+Default preconditions:
+
+- Use at least 40 valid OHLC rows when available; with fewer rows, mark the level evidence as weak or unavailable.
+- Sort rows ascending by `date`.
+- Use a swing lookback of 2 rows on each side unless the user requests another lookback.
+
+Swing candidates:
+
+```text
+swing low at i when low[i] <= low[i - 1], low[i - 2], low[i + 1], low[i + 2]
+swing high at i when high[i] >= high[i - 1], high[i - 2], high[i + 1], high[i + 2]
+```
+
+Cluster candidates into levels when their prices are within this tolerance:
+
+```text
+median_range_pct = median((high - low) / close) over valid rows
+tolerance_pct = max(0.5, median_range_pct * 100)
+```
+
+For each cluster, calculate:
+
+- `level`: average candidate price in the cluster.
+- `touches`: number of swing candidates in the cluster.
+- `date_range`: first and last candidate dates.
+- `distance_pct`: `(level - latest_close) / latest_close * 100`.
+- `evidence`: short text describing touches, date range, and tolerance.
+
+Classify support and resistance from the latest close:
+
+- nearest support: highest clustered swing low level below or equal to the latest close.
+- nearest resistance: lowest clustered swing high level above or equal to the latest close.
+
+Rank candidates by touches first, then recency, then distance to latest close. If no candidate exists on one side of the latest close, mark that side unavailable rather than inventing a level.
+
+Do not label support or resistance as a trading signal. Do not call a breakout, breakdown, stop-loss, or target price unless the user explicitly asks for a trading plan and the answer clearly separates assumptions from facts.
+
 ## Missing Values
 
 If a calculation cannot be performed:

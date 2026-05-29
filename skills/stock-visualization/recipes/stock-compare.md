@@ -31,11 +31,12 @@ Fill:
 
 Compose:
 
-1. `comparison-card.md`, repeated once per security.
-2. `comparison-matrix.md`.
-3. `candlestick-chart.md` as small panels when comparing two to three securities and OHLC rows are available.
-4. `price-trend.md` only for four to five securities, non-OHLC data, or one combined indexed chart when the agent can normalize values clearly.
-5. `source-footnote.md`.
+1. `chart-frame.md` around every chart-like comparison section.
+2. `comparison-card.md`, repeated once per security.
+3. `comparison-matrix.md`.
+4. `candlestick-chart.md` as small panels when comparing two to three securities and OHLC rows are available.
+5. `price-trend.md` only for four to five securities, non-OHLC data, or one combined indexed chart when the agent can normalize values clearly.
+6. `source-footnote.md`.
 
 ## Missing Data Behavior
 

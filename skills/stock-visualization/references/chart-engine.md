@@ -56,11 +56,25 @@ P0 generated reports may use stacked chart instances for broad browser compatibi
 - MACD chart: histogram plus DIF and DEA lines.
 - KDJ chart: K, D, and J lines when enough rows exist.
 
-Synchronize visible ranges both ways with `timeScale().subscribeVisibleTimeRangeChange`. Avoid recursive updates with a boolean guard.
+All stacked panes must behave as one chart:
+
+- Synchronize the x-axis with `timeScale().subscribeVisibleLogicalRangeChange`, `getVisibleLogicalRange`, and `setVisibleLogicalRange`; do not rely on time-range synchronization alone.
+- Keep one shared logical range for all panes. Apply updates both ways and avoid recursive updates with a boolean guard.
+- Add a `clampVisibleLogicalRange(range)` helper before applying any range. Set `MIN_VISIBLE_BARS` to at least 20 bars, and set `MAX_VISIBLE_BARS` to the smaller of the available candle count and a report-appropriate cap such as 160 bars. Expand ranges below the minimum and shrink ranges above the maximum around the current center before clamping to the data edges.
+- Apply the clamped range back to the source chart as well as every sibling chart. Do not skip the source chart with `if (other !== chart)`, because that leaves the active pane over-zoomed while the other panes are clamped.
+- Configure `timeScale` with `minBarSpacing` and a reasonable initial `barSpacing` so bars cannot collapse into unreadable strips at the widest permitted range.
+- Preserve the current logical range during fullscreen and resize refreshes. Do not call `fitContent()` on every resize after the initial layout, because it can reset one pane differently from the rest.
 
 ## Crosshair And Tooltip
 
 Register `subscribeCrosshairMove` on every chart instance. Build the tooltip from a merged `TooltipSnapshot` indexed by ISO date.
+
+Synchronize the crosshair across panes:
+
+- Keep a `chartEntries` list with `{ chart, series, value }` for each pane's primary series. Use the candle close for the main pane, volume for volume, MACD histogram value for MACD, and the first available oscillator line for KDJ or RSI.
+- In every `subscribeCrosshairMove` handler, call `syncCrosshairAcrossCharts(sourceEntry, param, snapshot)`. For every non-source pane, call `setCrosshairPosition(paneValue, param.time, panePrimarySeries)` when the pane value is numeric.
+- On pointer leave, missing `param.time`, or missing snapshot, call `clearCrosshairPosition()` on the other panes and hide the tooltip.
+- Configure `crosshair.mode` with `CrosshairMode.Normal`, not numeric mode constants and not magnet mode. Configure crosshair `vertLine` and `horzLine` with visible labels. Each pane has its own y-scale, so the synchronized vertical line aligns the timestamp while the pane-local `setCrosshairPosition` value exposes the corresponding y-axis label in that pane.
 
 Required tooltip fields:
 

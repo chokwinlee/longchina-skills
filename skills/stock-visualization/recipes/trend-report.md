@@ -30,10 +30,11 @@ Fill:
 
 Compose:
 
-1. `price-trend.md`.
-2. `metric-series.md`, repeated for selected indicators.
-3. Plain text interval summary when useful.
-4. `source-footnote.md`.
+1. `chart-frame.md` around price and metric-series visuals.
+2. `price-trend.md`.
+3. `metric-series.md`, repeated for selected indicators.
+4. Plain text interval summary when useful.
+5. `source-footnote.md`.
 
 ## Missing Data Behavior
 

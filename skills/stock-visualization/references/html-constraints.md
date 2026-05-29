@@ -25,6 +25,12 @@ Every generated HTML report must be a single file:
 - No external scripts or stylesheets.
 - License-required attribution links are allowed when they do not load remote runtime assets.
 
+The finished report should open directly through `file://`. Prefer the built-in browser: open the `file://` URL in the Codex in-app Browser first so the user can inspect the report inside the agent workspace. Use the user's system default browser as a fallback only when the built-in browser is unavailable, cannot load the local file, or the user asks for an external browser. On macOS, fallback to `open "/absolute/path/to/report.html"`.
+
+Do not start a local static server for normal viewing. Do not run screenshot or browser automation checks by default; reserve those checks for explicit render-debugging requests, failed opens, or shared component changes that need regression testing.
+
+Do not call Playwright as a post-generation acceptance step. Do not run desktop/mobile screenshot passes, console-warning sweeps, or pixel checks for ordinary report delivery. If a render bug is suspected, run one targeted check only and avoid creating screenshot artifacts unless the screenshot is the debugging deliverable.
+
 ## Visual Rules
 
 - Use OKLCH colors.
@@ -50,6 +56,21 @@ Every generated HTML report must be a single file:
 - Include visible empty states inside the component rather than failing silently.
 - Use semantic HTML tables for tabular data.
 - For interactive stock charts, keep the chart engine and data in the same HTML file; viewing must not require `npm`, Node.js, a frontend server, or network access.
+
+## Chart Frame And Fullscreen
+
+Every chart-like visual must use a shared chart frame with a visible fullscreen action. This includes SVG charts, Canvas charts, vendored `lightweight-charts` panes, heatmaps, matrix visuals, bubble or scatter plots, and visual comparison tables.
+
+Use `components/chart-frame.md` as the outer shell:
+
+- Put the title, subtitle, legend, source-date hint, and actions in the frame header.
+- Add a button with `data-lc-fullscreen` and a clear accessible label such as `Open chart fullscreen`.
+- Keep the chart surface edge-safe. Do not clip labels, bubbles, axis text, or legends at the right or bottom boundary.
+- When fullscreen opens, use a fixed overlay style, preserve the same report theme, and keep the chart content inside the viewport with internal scrolling only when necessary.
+- Support `Escape` to close, background click to close when safe, and a small focus trap between the close button and chart actions.
+- On open and close, dispatch a `resize` event and a custom `lc:chart-resize` event so SVG, Canvas, and chart-engine components can recalculate dimensions.
+- Do not write partial fullscreen handlers in recipes or examples; compose the `chart-frame.md` markup and script.
+- Do not create a new browser window, load remote assets, or require a dev server for fullscreen viewing.
 
 ## Accessibility
 

@@ -54,7 +54,7 @@ Required: `symbol`, `date`, `close`.
 
 Optional: `open`, `high`, `low`, `previous_close`, `percent_change`, `volume`, `amount`, calculated indicator fields such as `ma5`, `ma20`, `dif`, `dea`, `macd`.
 
-Units: `volume` follows the upstream dataset unit, `amount` follows the upstream dataset unit, `percent_change` is percentage points.
+Units: `volume` follows the returned dataset unit, `amount` follows the returned dataset unit, `percent_change` is percentage points.
 
 ## CandlePoint
 
@@ -158,6 +158,44 @@ Optional: `date`, `percent_change`, `volume`, `amount`, daily-metrics metrics, a
 
 Missing behavior: show `--` for optional missing values and keep the tooltip visible if required OHLC values exist.
 
+## TechnicalLevelSet
+
+Use for support and resistance panels derived from returned `prices` rows.
+
+```json
+{
+  "latest_close": 52.2,
+  "method": "swing high/low clusters",
+  "levels": [
+    {
+      "kind": "support",
+      "level": 49.8,
+      "distance_pct": -4.6,
+      "method": "swing low cluster",
+      "touches": 3,
+      "date_range": "2026-02-18 to 2026-04-09",
+      "evidence": "Three returned daily lows clustered within tolerance."
+    },
+    {
+      "kind": "resistance",
+      "level": 55.6,
+      "distance_pct": 6.5,
+      "method": "swing high cluster",
+      "touches": 2,
+      "date_range": "2026-03-12 to 2026-05-06",
+      "evidence": "Two returned daily highs clustered within tolerance."
+    }
+  ],
+  "missing": []
+}
+```
+
+Required: `latest_close`, `levels[].kind`, `levels[].level`, `levels[].method`, `levels[].evidence`.
+
+Optional: `method`, `levels[].distance_pct`, `levels[].touches`, `levels[].date_range`, `missing`.
+
+Missing behavior: keep unavailable support/resistance levels visible in `missing`; do not fabricate levels when the returned range is too short or OHLC fields are missing.
+
 ## MetricPoint
 
 Use for time-series valuation, turnover, market value, or volume metrics.
@@ -189,7 +227,7 @@ Use for latest-value cards, comparison matrices, and sortable tables.
   "symbol": "000001.SZ",
   "date": "20260515",
   "metrics": {
-    "close": { "label": "Close", "value": 11.73, "unit": "CNY", "source_dataset": "daily" },
+    "close": { "label": "Close", "value": 11.73, "unit": "CNY", "source_dataset": "prices" },
     "pe_ttm": { "label": "PE TTM", "value": 5.94, "unit": "x", "source_dataset": "daily-metrics" },
     "pb": { "label": "PB", "value": 0.62, "unit": "x", "source_dataset": "daily-metrics" },
     "total_market_value": { "label": "Total market value", "value": 227680000000, "unit": "CNY", "source_dataset": "daily-metrics" }
@@ -234,6 +272,85 @@ Optional: `industry`, `date`, `units`.
 
 Missing behavior: render missing values as `--`; do not sort missing numeric values ahead of real values.
 
+## ExternalReference
+
+Use for official public reference evidence that came from outside Longchina and must remain separate from Longchina rows.
+
+```json
+{
+  "source_type": "public reference",
+  "source_name": "HKEX Stock Connect shareholding search",
+  "url": "https://www2.hkexnews.hk/Shareholding-Disclosures/Stock-Connect-Shareholding?sc_lang=en",
+  "retrieved_at": "2026-05-26",
+  "published_at": null,
+  "evidence_used": "Northbound shareholding snapshot by date",
+  "limitation": "Public reference only; not merged into Longchina rows."
+}
+```
+
+Required: `source_type`, `source_name`, `url`, `retrieved_at`, `evidence_used`.
+
+Optional: `published_at`, `limitation`.
+
+Missing behavior: if a public reference cannot be verified, omit it from evidence components and state the missing source in `SourceDisclosure.notes`.
+
+## CapitalFlowEvidence
+
+Use for `capital-flow-panel.md` after deriving liquidity and capital-flow proxy observations from returned rows and optional public references.
+
+```json
+{
+  "as_of": "20260515",
+  "rows": [
+    {
+      "label": "Amount change",
+      "value": 18.4,
+      "display": "+18.4%",
+      "state": "positive",
+      "date": "20260515",
+      "source": "prices",
+      "evidence": "Latest five-row average amount is above the prior five-row average."
+    }
+  ],
+  "external_references": []
+}
+```
+
+Required: `rows[].label`, `rows[].display`, `rows[].date`, `rows[].source`, `rows[].evidence`.
+
+Optional: `as_of`, `rows[].value`, `rows[].state`, `external_references`.
+
+Missing behavior: keep unavailable flow or liquidity observations visible as missing rows in the component; do not replace missing flow data with price movement.
+
+## RelativeStrengthWindow
+
+Use for `relative-strength-panel.md` after aligning subject and benchmark or peer windows to returned open dates.
+
+```json
+{
+  "subject": "000001.SZ",
+  "benchmark": "peer median",
+  "windows": [
+    {
+      "label": "20 open dates",
+      "subject_return_pct": 6.4,
+      "benchmark_return_pct": 3.1,
+      "spread_pct": 3.3,
+      "start": "20260416",
+      "end": "20260515",
+      "source": "prices",
+      "sample_size": 18
+    }
+  ]
+}
+```
+
+Required: `subject`, `benchmark`, `windows[].label`, `windows[].subject_return_pct`, `windows[].benchmark_return_pct`, `windows[].spread_pct`, `windows[].start`, `windows[].end`, `windows[].source`.
+
+Optional: `windows[].rank`, `windows[].sample_size`, `windows[].evidence`.
+
+Missing behavior: mark the window unavailable when the subject and benchmark cannot be aligned. Do not fabricate benchmark rows, peer medians, or ranks.
+
 ## SourceDisclosure
 
 Required for every generated page.
@@ -243,7 +360,7 @@ Required for every generated page.
   "generated_at": "2026-05-16T16:30:00+08:00",
   "data_sources": [
     {
-      "dataset": "daily",
+      "dataset": "prices",
       "fields": ["symbol", "date", "close", "volume"],
       "filters": { "symbol": "000001.SZ", "start": "20260511", "end": "20260515" },
       "row_count": 5
@@ -253,6 +370,17 @@ Required for every generated page.
       "fields": ["symbol", "date", "pe_ttm", "pb", "total_market_value"],
       "filters": { "symbol": "000001.SZ", "start": "20260511", "end": "20260515" },
       "row_count": 5
+    }
+  ],
+  "external_references": [
+    {
+      "source_type": "public reference",
+      "source_name": "ChinaBond yield curves",
+      "url": "https://yield.chinabond.com.cn/cbweb-pbc-web/pbc/more?locale=en_US",
+      "retrieved_at": "2026-05-26",
+      "published_at": "2026-05-25",
+      "evidence_used": "Government bond yield curve tenor used for scenario assumptions",
+      "limitation": "Curve date and tenor must be shown wherever the assumption appears."
     }
   ],
   "notes": ["Example output uses illustrative values."],
@@ -315,6 +443,10 @@ Calculation source: use `references/annual-report-calculations.md` for every fie
   "technical_state": [
     { "label": "MA20/60/120", "state": "neutral", "value": "MA20 above MA60, below MA120", "evidence": "Calculated from returned daily rows." }
   ],
+  "technical_levels": {
+    "latest_close": 52.2,
+    "levels": []
+  },
   "agent_brief": {
     "title": "Research brief",
     "points": ["Separate fact from interpretation and avoid buy/sell conclusions."],
@@ -325,6 +457,8 @@ Calculation source: use `references/annual-report-calculations.md` for every fie
 ```
 
 Required: `profile`, `period`, `candles`, `performance_summary`, `return_windows`, `drawdown`, `valuation`, `benchmark`, `events`, `technical_state`, `agent_brief`, and `source_disclosure`.
+
+Optional: `technical_levels` when enough OHLC history exists to derive support and resistance.
 
 Missing behavior: omit unavailable blocks only when the source dataset is missing, then state the omitted block and dataset in `SourceDisclosure.notes`. Do not fabricate benchmarks, filing events, research ratings, or agent conclusions.
 
